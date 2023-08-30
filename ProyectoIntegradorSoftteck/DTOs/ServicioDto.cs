@@ -1,4 +1,4 @@
-﻿namespace ProyectoIntegradorSoftteck.Entities
+﻿namespace ProyectoIntegradorSoftteck.DTOs
 {
     public class ServicioDto
     {
