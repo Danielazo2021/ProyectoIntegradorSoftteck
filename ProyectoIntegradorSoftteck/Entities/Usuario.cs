@@ -1,7 +1,12 @@
-﻿namespace ProyectoIntegradorSoftteck.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ProyectoIntegradorSoftteck.Entities
 {
-    public class UsuarioDto
+    [Table("usuarios")]
+    public class Usuario
     {
+        [Key]
         public int CodUsuario{ get; set; }
         public string Nombre { get; set; }
         public int Dni { get; set; }
