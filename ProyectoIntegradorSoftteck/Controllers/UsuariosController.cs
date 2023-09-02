@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using APPIntegrator.Repository;
+using Microsoft.AspNetCore.Mvc;
+using ProyectoIntegradorSoftteck.DTOs;
+using ProyectoIntegradorSoftteck.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,7 +11,14 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-     
+
+        private readonly IUsuarioRepository _usuarioRepository;
+
+        public UsuariosController(IUsuarioRepository usuarioRepository)
+        {
+            _usuarioRepository = usuarioRepository;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -17,16 +27,39 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
         
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<ActionResult<Usuario>> ObtenerUsuario(int id)
         {
-            return Ok("ok");
+            var usuario = await _usuarioRepository.ObtenerPorId(id);
+
+            if (usuario == null)
+            {
+                return NotFound(); // Retorna un código 404 si el usuario no se encuentra
+            }
+
+            return usuario;
         }
 
-       
+
+
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public async Task<ActionResult<Usuario>> InsertarUsuario(UsuarioDto usuarioDto)
         {
-            return Ok("ok");
+            try
+            {
+                var usuario = new Usuario {
+                    Nombre=usuarioDto.Nombre,
+                    Dni=usuarioDto.Dni,
+                    Tipo=usuarioDto.Tipo,
+                    Contrasena=usuarioDto.Contrasena
+                };
+
+                await _usuarioRepository.Insertar(usuario);
+                return Ok(190);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
   

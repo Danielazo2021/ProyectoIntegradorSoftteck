@@ -1,6 +1,7 @@
 
 using ProyectoIntegradorSoftteck.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using APPIntegrator.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<ContextDB>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
 
 
 
