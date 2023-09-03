@@ -1,7 +1,8 @@
-﻿using APPIntegrator.Repository;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Repository.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

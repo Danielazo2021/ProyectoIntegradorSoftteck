@@ -1,4 +1,4 @@
-﻿namespace ProyectoIntegradorSoftteck.Services
+﻿namespace ProyectoIntegradorSoftteck.Services.Implementaciones
 {
     public class ProyectoService
     {
