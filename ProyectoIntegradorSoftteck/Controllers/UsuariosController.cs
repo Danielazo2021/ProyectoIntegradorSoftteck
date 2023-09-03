@@ -21,8 +21,8 @@ namespace ProyectoIntegradorSoftteck.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpGet]
-        public  async Task<ActionResult<Usuario>> ObtenerUsuarios()
+        [HttpGet("usuario")]
+        public  async Task<ActionResult<List<Usuario>>> ObtenerUsuarios()
         {
             var respuesta = await _usuarioService.ObtenerUsuarios();
 
@@ -51,7 +51,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Usuario>> InsertarUsuario([FromBody] UsuarioDto usuarioDto)
+        public async Task<ActionResult<String>> InsertarUsuario(UsuarioDto usuarioDto)
         {
 
             var respuesta = await _usuarioService.InsertarUsuario(usuarioDto);
@@ -67,10 +67,9 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
   
         [HttpPut("{dni}")]
-        public async Task<ActionResult<Usuario>> ModificarUsuario([FromBody]Usuario usuarioDto)
+        public async Task<ActionResult<Usuario>> ModificarUsuario(Usuario usuarioDto)
             // momentanemente falta implementar en repository
         {
-
             var respuesta = await _usuarioService.ModificarUsuario(usuarioDto);
             if (respuesta)
             {
@@ -78,10 +77,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
             }
 
             return BadRequest("Error al modificar el usuario, asegurese que el usuario exista");
-        }
-    
-
-
+        }   
 
 
     [HttpDelete("{dni}")]
@@ -94,7 +90,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
                 return Ok("Usuario borrado con exito");
             }
 
-            return BadRequest("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
+            return NotFound("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
         }
     }
 }

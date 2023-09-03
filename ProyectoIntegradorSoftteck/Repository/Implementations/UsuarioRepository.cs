@@ -27,8 +27,28 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
 
         public async Task<bool> BorrarUsuario(int dni)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Dni == dni);
+                if (usuario != null)
+                {
+                    _context.Usuarios.Remove(usuario);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        
+
+
+    }
 
 
 
