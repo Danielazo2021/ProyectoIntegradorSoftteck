@@ -1,7 +1,8 @@
 
 using ProyectoIntegradorSoftteck.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using APPIntegrator.Repository;
+using ProyectoIntegradorSoftteck.Repository.Implementations;
+using ProyectoIntegradorSoftteck.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
