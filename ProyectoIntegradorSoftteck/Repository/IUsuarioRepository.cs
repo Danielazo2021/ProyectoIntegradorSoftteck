@@ -5,8 +5,8 @@ namespace ProyectoIntegradorSoftteck.Repository
  
         public interface IUsuarioRepository
         {
-            Task<Usuario> Insertar(Usuario usuario);
-            Task<Usuario?> ObtenerPorId(int id);
+            Task<Boolean> Insertar(Usuario usuario);
+            Task<Usuario> ObtenerPorId(int id);
         }
 
     

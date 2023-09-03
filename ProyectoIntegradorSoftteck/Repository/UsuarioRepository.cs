@@ -16,26 +16,36 @@ namespace APPIntegrator.Repository{
             _context = context;
         }
 
-        public async Task<Usuario> Insertar(Usuario usuario)
+        public async Task<Boolean> Insertar(Usuario usuario)
         {
+            bool respuesta;
             try
             {
                 _context.Usuarios.Add(usuario);
                 await _context.SaveChangesAsync();
-                return usuario;
-            }catch (Exception ex)
-            {
-                Console.WriteLine($"Algo paso aca {ex}");
+                respuesta = true;
 
-                throw;
+            }catch (Exception)
+            {
+                respuesta=false;                                
             }
+            return respuesta;
           
         }
 
 
-        public async Task<Usuario?> ObtenerPorId(int codigoUsuarioIngresado)
+        public async Task<Usuario> ObtenerPorId(int codigoUsuarioIngresado)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(usuario => usuario.CodUsuario == codigoUsuarioIngresado);
+            var usuario=  await _context.Usuarios.FirstOrDefaultAsync(usuario => usuario.CodUsuario == codigoUsuarioIngresado);
+            if (usuario != null)
+            {
+                return usuario;
+            }
+            else
+            {
+
+            }
+                return null; // vemos que devolvemos
         }
     }
 }
