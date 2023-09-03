@@ -3,6 +3,9 @@ using ProyectoIntegradorSoftteck.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.Repository.Implementations;
 using ProyectoIntegradorSoftteck.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Services.Interfaces;
+using ProyectoIntegradorSoftteck.Services.Implementaciones;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,7 @@ builder.Services.AddDbContext<ContextDB>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 
 

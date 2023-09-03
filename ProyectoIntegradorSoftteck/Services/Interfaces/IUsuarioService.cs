@@ -1,6 +1,16 @@
-﻿namespace ProyectoIntegradorSoftteck.Services.Interfaces
+﻿using ProyectoIntegradorSoftteck.DTOs;
+using ProyectoIntegradorSoftteck.Entities;
+
+namespace ProyectoIntegradorSoftteck.Services.Interfaces
 {
-    public class IUsuarioService
+    public interface IUsuarioService
     {
+ 
+        Task<bool> InsertarUsuario(UsuarioDto usuario);
+        Task<Usuario> ObtenerUsuarioPorId(int id);
+        Task<List<Usuario>> ObtenerUsuarios();
+        Task<bool> BorrarUsuario(int dni);
+        Task<bool> ModificarUsuario(Usuario usuario);
+
     }
 }

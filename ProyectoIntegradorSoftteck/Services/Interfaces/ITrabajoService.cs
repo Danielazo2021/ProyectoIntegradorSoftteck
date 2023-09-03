@@ -1,6 +1,6 @@
 ﻿namespace ProyectoIntegradorSoftteck.Services.Interfaces
 {
-    public class ITrabajoService
+    public interface ITrabajoService
     {
     }
 }

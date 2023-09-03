@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 using ProyectoIntegradorSoftteck.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,67 +14,87 @@ namespace ProyectoIntegradorSoftteck.Controllers
     public class UsuariosController : ControllerBase
     {
 
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioService _usuarioService;
 
-        public UsuariosController(IUsuarioRepository usuarioRepository)
+        public UsuariosController(IUsuarioService usuarioService)
         {
-            _usuarioRepository = usuarioRepository;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public  async Task<ActionResult<Usuario>> ObtenerUsuarios()
         {
-            return Ok("ok");
-        }
+            var respuesta = await _usuarioService.ObtenerUsuarios();
 
-        
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> ObtenerUsuario(int id)
-        {
-            var usuario = await _usuarioRepository.ObtenerPorId(id);
-
-            if (usuario == null)
+            if (respuesta != null)
             {
-                return NotFound(); // Retorna un código 404 si el usuario no se encuentra
+                return Ok(respuesta);
             }
 
-            return usuario;
+            return BadRequest("Error al consultar lista de usuarios");
+        }
+
+
+        [HttpGet("{dni}")]
+        public async Task<ActionResult<Usuario>> ObtenerUsuario(int dni)
+        {
+            var respuesta = await _usuarioService.ObtenerUsuarioPorId(dni);
+
+            if (respuesta != null)
+            {
+                return Ok(respuesta);
+            }
+
+            return BadRequest("Error al buscar el usuario, o usuario no existe");
         }
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Usuario>> InsertarUsuario(UsuarioDto usuarioDto)
+        public async Task<ActionResult<Usuario>> InsertarUsuario([FromBody] UsuarioDto usuarioDto)
         {
-            try
-            {
-                var usuario = new Usuario {
-                    Nombre=usuarioDto.Nombre,
-                    Dni=usuarioDto.Dni,
-                    Tipo=usuarioDto.Tipo,
-                    Contrasena=usuarioDto.Contrasena
-                };
 
-                await _usuarioRepository.Insertar(usuario);
-                return Ok(190);
-            }
-            catch (Exception ex)
+            var respuesta = await _usuarioService.InsertarUsuario(usuarioDto);
+            if (respuesta)
             {
-                return BadRequest(ex.Message);
+                return Ok("Usuario registrado con exito");
             }
+
+            return BadRequest("Error al ingresar el usuario");
         }
+    
+
 
   
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        [HttpPut("{dni}")]
+        public async Task<ActionResult<Usuario>> ModificarUsuario([FromBody]Usuario usuarioDto)
+            // momentanemente falta implementar en repository
         {
-            return Ok("ok");
-        }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+            var respuesta = await _usuarioService.ModificarUsuario(usuarioDto);
+            if (respuesta)
+            {
+                return Ok("Usuario modificado con exito");
+            }
+
+            return BadRequest("Error al modificar el usuario, asegurese que el usuario exista");
+        }
+    
+
+
+
+
+    [HttpDelete("{dni}")]
+        public async Task<ActionResult<bool>> BorrarUsuario(int dni)
         {
-            return Ok("ok");
+            var respuesta = await _usuarioService.BorrarUsuario(dni);
+
+            if (respuesta)
+            {
+                return Ok("Usuario borrado con exito");
+            }
+
+            return BadRequest("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
         }
     }
 }

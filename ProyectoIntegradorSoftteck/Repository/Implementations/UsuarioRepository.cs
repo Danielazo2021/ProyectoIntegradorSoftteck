@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProyectoIntegradorSoftteck.Controllers;
 using ProyectoIntegradorSoftteck.DataAccess;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 using ProyectoIntegradorSoftteck.Repository.Interfaces;
+using System.Net;
 
 namespace ProyectoIntegradorSoftteck.Repository.Implementations
 {
@@ -18,13 +20,22 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
             _context = context;
         }
 
-        public async Task<bool> Insertar(Usuario usuario)
+
+
+
+
+
+        public async Task<bool> BorrarUsuario(int dni)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public async Task<bool> InsertarUsuario(Usuario usuario)
         {
             bool respuesta;
 
-
-
-            /// aca deberia llegar ya el usuario entity, la conversion la jhacemos en el servicio
             try
             {
                 _context.Usuarios.Add(usuario);
@@ -40,28 +51,49 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
 
         }
 
-        public Task<bool> ModificarUsuario(Usuario usuario)
+       
+
+        public async Task<bool> ModificarUsuario(Usuario usuario)
         {
+            //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
+            //despues hacer un update en la se y un savechange
             throw new NotImplementedException();
         }
 
-        public async Task<Usuario> ObtenerPorId(int codigoUsuarioIngresado)
+        public async Task<Usuario> ObtenerUsuarioPorId(int dni)
         {
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(usuario => usuario.CodUsuario == codigoUsuarioIngresado);
-            if (usuario != null)
+            try
             {
-                return usuario;
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(usuario => usuario.Dni == dni);
+                if (usuario != null)
+                {
+                    return usuario;
+                }
             }
-            else
+            catch (Exception ex)
+            {
+
+            }          
+            
+            return null; // Si implementamos un resultado generico base podemos setear el error ("no existe registro con ese ID")
+        }
+
+        public async Task<List<Usuario>> ObtenerUsuarios()
+        {
+          List<Usuario> listaUsuarios= new List<Usuario> ();
+            try
+            {
+                listaUsuarios = await _context.Usuarios.ToListAsync();
+
+            }catch (Exception)
             {
 
             }
-            return null; // vemos que devolvemos
-        }
 
-        public Task<List<Usuario>> ObtenerTodos()
-        {
-            throw new NotImplementedException();
+            return listaUsuarios;// Si implementamos un resultado generico base podemos setear el error ("no existe registro con ese ID")
+
+
         }
+       
     }
 }
