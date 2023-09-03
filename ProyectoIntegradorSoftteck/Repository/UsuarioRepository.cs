@@ -2,16 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.DataAccess;
 using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Repository;
 
-namespace APPIntegrator.Repository
-{
+namespace APPIntegrator.Repository{
 
-
-    public interface IUsuarioRepository
-    {
-        Task<Usuario> Insertar(Usuario usuario);
-        Task<Usuario?> ObtenerPorId(int id);
-    }
 
     public class UsuarioRepository : IUsuarioRepository
     {
