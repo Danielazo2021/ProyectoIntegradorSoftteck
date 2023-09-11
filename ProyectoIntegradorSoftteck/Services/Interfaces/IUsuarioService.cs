@@ -9,7 +9,7 @@ namespace ProyectoIntegradorSoftteck.Services.Interfaces
         Task<bool> InsertarUsuario(UsuarioDto usuario);
         Task<Usuario> ObtenerUsuarioPorId(int id);
         Task<List<Usuario>> ObtenerUsuarios();
-        Task<bool> BorrarUsuario(int dni);
+        Task<bool> BorrarUsuario(int id);
         Task<bool> ModificarUsuario(Usuario usuario);
 
     }

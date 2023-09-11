@@ -1,25 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.Controllers;
 using ProyectoIntegradorSoftteck.DataAccess;
+using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
-using ProyectoIntegradorSoftteck.Repository.Interfaces;
 using System.Net;
 
-namespace ProyectoIntegradorSoftteck.Repository.Implementations
+namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 {
 
 
-    public class UsuarioRepository : IUsuarioRepository
-    {       
+    public class UsuarioRepository :  Repository<Usuario>,IUsuarioRepository
+    {
 
         private readonly ContextDB _context;
 
-        public UsuarioRepository(ContextDB context)
+        public UsuarioRepository(ContextDB context): base(context)
         {
-            _context = context;
+            
         }
 
+//        Ver de apadtar para login
+        //public async Task<Usuario?> AutenticateCredentials(AutenticateDto dto)
+        //{
+        //    return await _context.Users.SingleOrDefaultAsync(x => x.Email == dto.Email && x.Password == dto.Password);
+        //}
 
 
 
@@ -45,10 +50,10 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
             {
                 return false;
             }
-        
 
 
-    }
+
+        }
 
 
 
@@ -71,7 +76,7 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
 
         }
 
-       
+
 
         public async Task<bool> ModificarUsuario(Usuario usuario)
         {
@@ -93,27 +98,28 @@ namespace ProyectoIntegradorSoftteck.Repository.Implementations
             catch (Exception ex)
             {
 
-            }          
-            
-            return null; // Si implementamos un resultado generico base podemos setear el error ("no existe registro con ese ID")
+            }
+
+            return null; 
         }
 
         public async Task<List<Usuario>> ObtenerUsuarios()
         {
-          List<Usuario> listaUsuarios= new List<Usuario> ();
+            List<Usuario> listaUsuarios = new List<Usuario>();
             try
             {
                 listaUsuarios = await _context.Usuarios.ToListAsync();
 
-            }catch (Exception)
+            }
+            catch (Exception)
             {
 
             }
 
-            return listaUsuarios;// Si implementamos un resultado generico base podemos setear el error ("no existe registro con ese ID")
+            return listaUsuarios;
 
 
         }
-       
+
     }
 }

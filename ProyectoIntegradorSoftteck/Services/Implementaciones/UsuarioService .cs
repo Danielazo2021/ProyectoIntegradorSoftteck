@@ -1,8 +1,8 @@
 ﻿using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
-using ProyectoIntegradorSoftteck.Repository.Implementations;
+
 using ProyectoIntegradorSoftteck.Services.Interfaces;
-using ProyectoIntegradorSoftteck.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
 
 namespace ProyectoIntegradorSoftteck.Services.Implementaciones
 {
@@ -16,9 +16,9 @@ namespace ProyectoIntegradorSoftteck.Services.Implementaciones
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<bool> BorrarUsuario(int dni)
+        public async Task<bool> BorrarUsuario(int id)
         {
-            bool respuesta = await _usuarioRepository.BorrarUsuario(dni);
+            bool respuesta = await _usuarioRepository.Borrar(id);
 
             return respuesta;
         }
@@ -35,7 +35,7 @@ namespace ProyectoIntegradorSoftteck.Services.Implementaciones
             };
 
             
-           bool respuesta = await _usuarioRepository.InsertarUsuario(usuarioEntity);
+           bool respuesta = await _usuarioRepository.Insertar(usuarioEntity);
 
             return respuesta;
 
@@ -44,18 +44,22 @@ namespace ProyectoIntegradorSoftteck.Services.Implementaciones
         public async Task<bool> ModificarUsuario(Usuario usuario)
         {
                         
-           bool respuesta = await _usuarioRepository.ModificarUsuario(usuario);
+           bool respuesta = await _usuarioRepository.Modificar(usuario);
 
             return respuesta;
         }
 
         public async  Task<Usuario> ObtenerUsuarioPorId(int id)
         {
-            var respuesta = await _usuarioRepository.ObtenerUsuarioPorId(id);
-            
+            var respuesta = await _usuarioRepository.ObtenerPorDni(id);
+            if(respuesta == null)
+            {
+                return null;
+            }
                 Usuario usuarioEntity = new Usuario
                 {
                     //no debo devolver el cod de suaurio porque solo es como se almacena en la BD, no es de interes de la consulta
+                  CodUsuario=respuesta.CodUsuario,
                     Nombre = respuesta.Nombre,
                     Contrasena = respuesta.Contrasena,
                     Dni = respuesta.Dni,
@@ -69,11 +73,12 @@ namespace ProyectoIntegradorSoftteck.Services.Implementaciones
         public async Task<List<Usuario>> ObtenerUsuarios()
         {
             List<Usuario> listaUsuarios = new List<Usuario>();
-            var respuesta = await _usuarioRepository.ObtenerUsuarios(); 
+            var respuesta = await _usuarioRepository.ObtenerTodos(); 
             foreach(var usuario in respuesta)
             {
                 Usuario usuarioEntity = new Usuario
                 {
+                    CodUsuario= usuario.CodUsuario,
                     Nombre = usuario.Nombre,
                     Contrasena = usuario.Contrasena,
                     Dni = usuario.Dni,

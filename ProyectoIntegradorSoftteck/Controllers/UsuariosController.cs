@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
-using ProyectoIntegradorSoftteck.Repository.Interfaces;
+
 using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,9 +13,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-
         private readonly IUsuarioService _usuarioService;
-
         public UsuariosController(IUsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
@@ -30,21 +28,19 @@ namespace ProyectoIntegradorSoftteck.Controllers
             {
                 return Ok(respuesta);
             }
-
             return BadRequest("Error al consultar lista de usuarios");
         }
 
 
-        [HttpGet("{dni}")]
-        public async Task<ActionResult<Usuario>> ObtenerUsuario(int dni)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuario>> ObtenerUsuario(int id)
         {
-            var respuesta = await _usuarioService.ObtenerUsuarioPorId(dni);
+            var respuesta = await _usuarioService.ObtenerUsuarioPorId(id);
 
             if (respuesta != null)
             {
                 return Ok(respuesta);
             }
-
             return BadRequest("Error al buscar el usuario, o usuario no existe");
         }
 
@@ -59,14 +55,13 @@ namespace ProyectoIntegradorSoftteck.Controllers
             {
                 return Ok("Usuario registrado con exito");
             }
-
             return BadRequest("Error al ingresar el usuario");
         }
     
 
 
   
-        [HttpPut("{dni}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<Usuario>> ModificarUsuario(Usuario usuarioDto)
             // momentanemente falta implementar en repository
         {
@@ -80,16 +75,15 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }   
 
 
-    [HttpDelete("{dni}")]
-        public async Task<ActionResult<bool>> BorrarUsuario(int dni)
+    [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> BorrarUsuario(int id)
         {
-            var respuesta = await _usuarioService.BorrarUsuario(dni);
+            var respuesta = await _usuarioService.BorrarUsuario(id);
 
             if (respuesta)
             {
                 return Ok("Usuario borrado con exito");
             }
-
             return NotFound("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
         }
     }

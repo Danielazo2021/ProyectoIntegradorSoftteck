@@ -11,14 +11,9 @@ namespace ProyectoIntegradorSoftteck.Entities
         public DateTime Fecha { get; set; }  
         public int CantHoras { get; set; }
         public double ValorHora { get; set; }
-        public double Costo { get; set; }
-
-
-        [ForeignKey("CodProyecto")]
-        public Proyecto proyecto { get; set; }
-
-        [ForeignKey("CodServicio")]
-        public List<Servicio> servicio { get; set; }
+        public double Costo { get; set; }       
+        public int cod_proyecto { get; set; } 
+        public int cod_servicio { get; set; }
 
     }
 }
