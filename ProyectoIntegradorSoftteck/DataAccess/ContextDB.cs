@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding;
 using ProyectoIntegradorSoftteck.Entities;
 
 namespace ProyectoIntegradorSoftteck.DataAccess
@@ -17,9 +18,24 @@ namespace ProyectoIntegradorSoftteck.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // base.OnModelCreating(modelBuilder);
+            var seeders = new List<IEntitySeeder>
+            {
+                new UsuarioSeeder(),
+                new ServicioSeeder(),
+                new ProyectoSeeder(),
+                new TrabajoSeeder()
+            };
+
+            foreach (var seeder in seeders)
+            {
+
+                seeder.SeedDatabase(modelBuilder);
+            }
+
             base.OnModelCreating(modelBuilder);
 
-        
+
         }
 
     }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
-using ProyectoIntegradorSoftteck.Repository.Interfaces;
+
 using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,88 +13,80 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-
-        private readonly IUsuarioService _usuarioService;
-
-        public UsuariosController(IUsuarioService usuarioService)
+        private readonly IUnitOfWork _unitOfWork;
+        public UsuariosController(IUnitOfWork unitOfWork)
         {
-            _usuarioService = usuarioService;
+            _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public  async Task<ActionResult<Usuario>> ObtenerUsuarios()
+    
+
+        [HttpGet("usuario")]
+        public  async Task<ActionResult<List<Usuario>>> ObtenerUsuarios()
         {
-            var respuesta = await _usuarioService.ObtenerUsuarios();
+            var respuesta = await _unitOfWork.UsuarioRepository.ObtenerUsuarios();
 
             if (respuesta != null)
             {
                 return Ok(respuesta);
             }
-
             return BadRequest("Error al consultar lista de usuarios");
         }
 
 
-        [HttpGet("{dni}")]
-        public async Task<ActionResult<Usuario>> ObtenerUsuario(int dni)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuario>> ObtenerUsuario(int id)
         {
-            var respuesta = await _usuarioService.ObtenerUsuarioPorId(dni);
+            var respuesta = await _unitOfWork.UsuarioRepository.ObtenerUsuarioPorId(id);
 
             if (respuesta != null)
             {
                 return Ok(respuesta);
             }
-
             return BadRequest("Error al buscar el usuario, o usuario no existe");
         }
 
 
 
         [HttpPost]
-        public async Task<ActionResult<Usuario>> InsertarUsuario([FromBody] UsuarioDto usuarioDto)
+        public async Task<ActionResult<String>> InsertarUsuario(UsuarioDto usuarioDto)
         {
 
-            var respuesta = await _usuarioService.InsertarUsuario(usuarioDto);
+            var respuesta = await _unitOfWork.UsuarioRepository.InsertarUsuario(usuarioDto);
             if (respuesta)
             {
                 return Ok("Usuario registrado con exito");
             }
-
             return BadRequest("Error al ingresar el usuario");
         }
     
 
 
   
-        [HttpPut("{dni}")]
-        public async Task<ActionResult<Usuario>> ModificarUsuario([FromBody]Usuario usuarioDto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Usuario>> ModificarUsuario(Usuario usuarioDto)
             // momentanemente falta implementar en repository
         {
-
-            var respuesta = await _usuarioService.ModificarUsuario(usuarioDto);
+            var respuesta = await _unitOfWork.UsuarioRepository.ModificarUsuario(usuarioDto);
             if (respuesta)
             {
                 return Ok("Usuario modificado con exito");
             }
 
             return BadRequest("Error al modificar el usuario, asegurese que el usuario exista");
-        }
-    
+        }   
 
 
-
-
-    [HttpDelete("{dni}")]
-        public async Task<ActionResult<bool>> BorrarUsuario(int dni)
+    [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> BorrarUsuario(int id)
         {
-            var respuesta = await _usuarioService.BorrarUsuario(dni);
+            var respuesta = await _unitOfWork.UsuarioRepository.BorrarUsuario(id);
 
             if (respuesta)
             {
                 return Ok("Usuario borrado con exito");
             }
-
-            return BadRequest("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
+            return NotFound("No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoIntegradorSoftteck.DTOs;
+using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,40 +11,79 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class ProyectosController : ControllerBase
     {
-      
-        [HttpGet]
-        public IActionResult Get()
+
+         private readonly IUnitOfWork _unitOfWork;
+        public ProyectosController(IUnitOfWork unitOfWork)
         {
-            return Ok("ok");
+            _unitOfWork = unitOfWork;
         }
 
-       
+        [HttpGet("proyecto")]
+        public async Task<ActionResult<List<Proyecto>>> ObtenerProyectos()
+        {
+            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectos();
+
+            if (respuesta != null)
+            {
+                return Ok(respuesta);
+            }
+            return BadRequest("Error al consultar lista de proyectos");
+        }
+
+
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<ActionResult<Proyecto>> ObtenerProyecto(int id)
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectoPorId(id);
+
+            if (respuesta != null)
+            {
+                return Ok(respuesta);
+            }
+            return BadRequest("Error al buscar el proyecto, o proyecto no existe");
         }
 
-       
+
+
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public async Task<ActionResult<String>> InsertarProyecto(ProyectoDto proyecto)
         {
 
-            return Ok("ok");
+            var respuesta = await _unitOfWork.ProyectoRepository.InsertarProyecto(proyecto);
+            if (respuesta)
+            {
+                return Ok("Proyecto registrado con exito");
+            }
+            return BadRequest("Error al ingresar el proyecto");
         }
 
-       
+
+
+
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Proyecto>> ModificarProyecto(Proyecto proyecto)
+        // momentanemente falta implementar en repository
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.ProyectoRepository.ModificarProyecto(proyecto);
+            if (respuesta)
+            {
+                return Ok("Proyecto modificado con exito");
+            }
+
+            return BadRequest("Error al modificar el proyecto, asegurese que el proyecto exista");
         }
 
-       
+
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ActionResult<bool>> BorrarProyecto(int id)
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.ProyectoRepository.BorrarProyecto(id);
+
+            if (respuesta)
+            {
+                return Ok("Proyecto borrado con exito");
+            }
+            return NotFound("No se puede borrar el proyecto, consulte que exista el proyecto que quiere borrar");
         }
     }
 }
