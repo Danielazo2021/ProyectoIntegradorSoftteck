@@ -11,24 +11,19 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
     public class UsuarioRepository :  Repository<Usuario>,IUsuarioRepository
-    {
-
-        private readonly ContextDB _context;
+    {               
 
         public UsuarioRepository(ContextDB context): base(context)
         {
             
         }
+        
 
 //        Ver de apadtar para login
         //public async Task<Usuario?> AutenticateCredentials(AutenticateDto dto)
         //{
         //    return await _context.Users.SingleOrDefaultAsync(x => x.Email == dto.Email && x.Password == dto.Password);
         //}
-
-
-
-
 
         public async Task<bool> BorrarUsuario(int dni)
         {
@@ -57,13 +52,19 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> InsertarUsuario(Usuario usuario)
+        public async Task<bool> InsertarUsuario(UsuarioDto usuarioDto)
         {
             bool respuesta;
 
             try
             {
-                _context.Usuarios.Add(usuario);
+                var usuarioNvo = new Usuario();
+                usuarioNvo.Dni= usuarioDto.Dni;
+                usuarioNvo.Contrasena= usuarioDto.Contrasena;
+                usuarioNvo.Nombre= usuarioDto.Nombre;
+                usuarioNvo.Tipo= usuarioDto.Tipo;
+
+                _context.Usuarios.Add(usuarioNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
 

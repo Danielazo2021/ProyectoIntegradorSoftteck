@@ -10,7 +10,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
             modelBuilder.Entity<Usuario>().HasData(
               new Usuario
               {
-                  CodUsuario = 1,
+                  CodUsuario = 11,
                   Nombre = "Marcio",
                   Dni = 2020200,
                   Tipo = 1,
@@ -18,7 +18,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
               },
                new Usuario
                {
-                   CodUsuario = 2,
+                   CodUsuario = 12,
                    Nombre = "Daniel",
                    Dni = 1010100,
                    Tipo = 1,
@@ -26,7 +26,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                },
                 new Usuario
                 {
-                    CodUsuario = 1,
+                    CodUsuario = 13,
                     Nombre = "Pepito",
                     Dni = 3030300,
                     Tipo = 2,

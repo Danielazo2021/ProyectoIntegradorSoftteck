@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoIntegradorSoftteck.DTOs;
+using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,40 +11,79 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class TrabajosController : ControllerBase
     {
-    
-        [HttpGet]
-        public IActionResult Get()
+
+        private readonly IUnitOfWork _unitOfWork;
+        public TrabajosController(IUnitOfWork unitOfWork)
         {
-            return Ok("ok");
+            _unitOfWork = unitOfWork;
         }
 
-       
+        [HttpGet("trabajo")]
+        public async Task<ActionResult<List<Trabajo>>> ObtenerTrabajos()
+        {
+            var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajos();
+
+            if (respuesta != null)
+            {
+                return Ok(respuesta);
+            }
+            return BadRequest("Error al consultar lista de trabajos");
+        }
+
+
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<ActionResult<Servicio>> ObtenerTrabajo(int id)
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajoPorId(id);
+
+            if (respuesta != null)
+            {
+                return Ok(respuesta);
+            }
+            return BadRequest("Error al buscar el trabajo, o trabajo no existe");
         }
 
-       
+
+
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public async Task<ActionResult<String>> InsertarTrabajo(TrabajoDto trabajoDto)
         {
 
-            return Ok("ok");
+            var respuesta = await _unitOfWork.TrabajoRepository.InsertarTrabajo(trabajoDto);
+            if (respuesta)
+            {
+                return Ok("Trabajo registrado con exito");
+            }
+            return BadRequest("Error al ingresar el trabajo");
         }
 
-    
+
+
+
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public async Task<ActionResult<Trabajo>> ModificarTrabajo(Trabajo trabajo)
+        // momentanemente falta implementar en repository
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.TrabajoRepository.ModificarTrabajo(trabajo);
+            if (respuesta)
+            {
+                return Ok("Trabajo modificado con exito");
+            }
+
+            return BadRequest("Error al modificar el trabajo, asegurese que el trabajo exista");
         }
 
-        
+
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ActionResult<bool>> BorrarTrabajo(int id)
         {
-            return Ok("ok");
+            var respuesta = await _unitOfWork.TrabajoRepository.BorrarTrabajo(id);
+
+            if (respuesta)
+            {
+                return Ok("Trabajo borrado con exito");
+            }
+            return NotFound("No se puede borrar el trabajo, consulte que exista el trabajo que quiere borrar");
         }
     }
 }

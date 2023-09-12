@@ -1,20 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 
 namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 {
     public class TrabajoRepository : Repository<Trabajo>, ITrabajoRepository
     {
-
-        private readonly ContextDB _context;
-
         public TrabajoRepository(ContextDB context) : base(context)
         {
 
         }
-
-
 
         public async Task<bool> BorrarTrabajo(int cod)
         {
@@ -43,13 +39,23 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> InsertarTrabajo(Trabajo trabajo)
+        public async Task<bool> InsertarTrabajo(TrabajoDto trabajoDto)
         {
             bool respuesta;
 
             try
             {
-                _context.Trabajos.Add(trabajo);
+                var trabajoNvo = new Trabajo();
+                trabajoNvo.cod_proyecto = trabajoDto.CodProyecto;
+                trabajoNvo.cod_servicio = trabajoDto.CodServicio;
+                trabajoNvo.Fecha = trabajoDto.Fecha;
+                trabajoNvo.ValorHora = trabajoDto.ValorHora;
+                trabajoNvo.CantHoras= trabajoDto.CantHoras;
+                trabajoNvo.Costo=trabajoDto.Costo;
+                    
+
+
+                _context.Trabajos.Add(trabajoNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
 
@@ -64,7 +70,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> ModificarTrabajoo(Trabajo trabajo)
+        public async Task<bool> ModificarTrabajo(Trabajo trabajo)
         {
             //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
             //despues hacer un update en la se y un savechange

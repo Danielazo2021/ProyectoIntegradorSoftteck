@@ -8,12 +8,14 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
     public class Repository<T> : IRepository<T> where T : class
     {
 
-        private readonly ContextDB _context;
+        protected readonly ContextDB _context;
 
         public Repository(ContextDB context)
         {
             _context = context;
         }
+
+     
 
         public async Task<bool> Borrar(int cod)
         {

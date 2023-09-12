@@ -13,16 +13,18 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
-        public UsuariosController(IUsuarioService usuarioService)
+        private readonly IUnitOfWork _unitOfWork;
+        public UsuariosController(IUnitOfWork unitOfWork)
         {
-            _usuarioService = usuarioService;
+            _unitOfWork = unitOfWork;
         }
+
+    
 
         [HttpGet("usuario")]
         public  async Task<ActionResult<List<Usuario>>> ObtenerUsuarios()
         {
-            var respuesta = await _usuarioService.ObtenerUsuarios();
+            var respuesta = await _unitOfWork.UsuarioRepository.ObtenerUsuarios();
 
             if (respuesta != null)
             {
@@ -35,7 +37,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> ObtenerUsuario(int id)
         {
-            var respuesta = await _usuarioService.ObtenerUsuarioPorId(id);
+            var respuesta = await _unitOfWork.UsuarioRepository.ObtenerUsuarioPorId(id);
 
             if (respuesta != null)
             {
@@ -50,7 +52,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         public async Task<ActionResult<String>> InsertarUsuario(UsuarioDto usuarioDto)
         {
 
-            var respuesta = await _usuarioService.InsertarUsuario(usuarioDto);
+            var respuesta = await _unitOfWork.UsuarioRepository.InsertarUsuario(usuarioDto);
             if (respuesta)
             {
                 return Ok("Usuario registrado con exito");
@@ -65,7 +67,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         public async Task<ActionResult<Usuario>> ModificarUsuario(Usuario usuarioDto)
             // momentanemente falta implementar en repository
         {
-            var respuesta = await _usuarioService.ModificarUsuario(usuarioDto);
+            var respuesta = await _unitOfWork.UsuarioRepository.ModificarUsuario(usuarioDto);
             if (respuesta)
             {
                 return Ok("Usuario modificado con exito");
@@ -78,7 +80,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
     [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> BorrarUsuario(int id)
         {
-            var respuesta = await _usuarioService.BorrarUsuario(id);
+            var respuesta = await _unitOfWork.UsuarioRepository.BorrarUsuario(id);
 
             if (respuesta)
             {

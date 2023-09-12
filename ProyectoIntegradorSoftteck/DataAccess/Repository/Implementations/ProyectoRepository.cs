@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 
 namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
@@ -7,13 +8,10 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
     public class ProyectoRepository : Repository<Proyecto>, IProyectoRepository
     {
 
-        private readonly ContextDB _context;
-
         public ProyectoRepository(ContextDB context) : base(context)
         {
 
         }
-
 
         public async Task<bool> BorrarProyecto(int cod)
         {
@@ -42,13 +40,20 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> InsertarProyecto(Proyecto proyecto)
+        public async Task<bool> InsertarProyecto(ProyectoDto proyecto)
         {
             bool respuesta;
 
             try
             {
-                _context.Proyectos.Add(proyecto);
+                var proyectoNvo= new Proyecto();
+                proyectoNvo.Nombre = proyecto.Nombre;
+                proyectoNvo.Direccion = proyecto.Direccion;
+                proyectoNvo.Estado= proyecto.Estado;
+               
+
+
+                _context.Proyectos.Add(proyectoNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
 

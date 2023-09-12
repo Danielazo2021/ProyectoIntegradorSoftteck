@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
+using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 
 namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 {
     public class ServicioRepository : Repository<Servicio>, IServicioRepository
-    {
-
-        private readonly ContextDB _context;
-
+    {      
         public ServicioRepository(ContextDB context) : base(context)
         {
 
@@ -42,13 +40,21 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> InsertarServicio(Servicio servicio)
+        public async Task<bool> InsertarServicio(ServicioDto servicioDto)
         {
             bool respuesta;
 
+
+
             try
             {
-                _context.Servicios.Add(servicio);
+                var servicioNvo = new Servicio();
+                servicioNvo.Descr=servicioDto.Descr;
+                servicioNvo.Estado = servicioDto.Estado;
+                servicioNvo.ValorHora = servicioDto.ValorHora;
+                
+
+                _context.Servicios.Add(servicioNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
 
@@ -88,22 +94,17 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return null;
         }
 
-        public async Task<List<Servicio>> ObtenerProyectos()
+        public async Task<List<Servicio>> ObtenerServicios()
         {
             List<Servicio> listaServicios = new List<Servicio>();
             try
             {
                 listaServicios = await _context.Servicios.ToListAsync();
-
             }
             catch (Exception)
             {
-
             }
-
-            return listaServicios;
-
-            
+            return listaServicios;            
         }
 
     }

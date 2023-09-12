@@ -10,21 +10,21 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
             modelBuilder.Entity<Proyecto>().HasData(
              new Proyecto
              {
-                 CodProyecto = 1,
+                 CodProyecto = 11,
                  Nombre = "Renovacion estudio Gomez",
                  Direccion = "Libertad 180 Carloz Paz",
                  Estado = 2
              },
              new Proyecto
              {
-                 CodProyecto = 2,
+                 CodProyecto = 12,
                  Nombre = "Ampliacion Anfiteatro RC",
                  Direccion = "Av San Martin S/N Rio Cuarto",
                  Estado = 1
              },
              new Proyecto
              {
-                 CodProyecto = 3,
+                 CodProyecto = 13,
                  Nombre = "Renovacion Teatro Colon",
                  Direccion = "Colon 1050 Cordoba Capital",
                  Estado = 3
