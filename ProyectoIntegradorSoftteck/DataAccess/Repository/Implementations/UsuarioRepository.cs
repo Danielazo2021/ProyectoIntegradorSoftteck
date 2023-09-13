@@ -8,16 +8,11 @@ using System.Net;
 
 namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 {
-
-
     public class UsuarioRepository :  Repository<Usuario>,IUsuarioRepository
     {               
-
         public UsuarioRepository(ContextDB context): base(context)
-        {
-            
-        }
-        
+        {            
+        }        
 
 //        Ver de apadtar para login
         //public async Task<Usuario?> AutenticateCredentials(AutenticateDto dto)
@@ -45,9 +40,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             {
                 return false;
             }
-
-
-
         }
 
 
