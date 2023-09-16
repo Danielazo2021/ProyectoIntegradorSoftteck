@@ -9,7 +9,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using System.Reflection;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,12 @@ builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Umsa Softtek", Version = "v1" });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Autorizacion JWT",
@@ -37,26 +44,16 @@ builder.Services.AddSwaggerGen(c =>
                     {
                     new OpenApiSecurityScheme
                     {
-                        Reference= new OpenApiReference
+                        Reference = new OpenApiReference
                         {
                             Type= ReferenceType.SecurityScheme,
-                            Id= "Bearer"
+                            Id = "Bearer"
                         }
-                        },
-                        new string[] {}
+                    }, new string[]{ }
                     }
                 });
-            });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-              options => options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-              {
-                  ValidateIssuerSigningKey = true, // ver
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-                  ValidateIssuer = false,
-                  ValidateAudience = false
-
-              });
+});
 
 builder.Services.AddDbContext<ContextDB>(options =>
 {
@@ -64,9 +61,26 @@ builder.Services.AddDbContext<ContextDB>(options =>
            .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
 
+//builder.Services.AddAuthorization(option =>
+//{
+//    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
+//});
+
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
+//           {
+//               ValidateIssuerSigningKey = true,
+//               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+//               ValidateIssuer = false,
+//               ValidateAudience = false
+//           });
 
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
+builder.Services.AddScoped<IProyectoRepository, ProyectoRepository>();
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();

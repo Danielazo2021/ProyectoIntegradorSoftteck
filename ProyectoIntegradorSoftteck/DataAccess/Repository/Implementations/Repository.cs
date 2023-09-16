@@ -62,9 +62,9 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<T> ObtenerPorDni(int dni)
+        public async Task<T> ObtenerPorDni(int cod)
         {           
-             var entity = await _context.Set<T>().FindAsync(dni);
+             var entity = await _context.Set<T>().FindAsync(cod);
             return entity;
         }
 

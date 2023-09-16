@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Helpers;
@@ -21,13 +22,21 @@ namespace ProyectoIntegradorSoftteck.Controllers
             _tokenJwtHelper = new TokenJwtHelper(configuration);
         }
 
+        /// <summary>
+        /// Punto de ingreso para el Login de la aplicacion
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>devuelvio el login</returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(AuthenticateDto dto)
         {
             var userCredentials = await _unitOfWork.UsuarioRepository.AuthenticateCredentials(dto);
-            if (userCredentials is null) return Unauthorized("Las credenciales son incorrectas");
-
+            if (userCredentials is null)
+            {
+                return ResponseFactory.CreateErrorResponse (401, "Las credenciales son incorrectas");
+                
+            }
             var token = _tokenJwtHelper.GenerateToken(userCredentials);
 
             var user = new UsuarioLoginDto()
@@ -36,8 +45,8 @@ namespace ProyectoIntegradorSoftteck.Controllers
                 Token = token
             };
 
-
-            return Ok(user);
+            return ResponseFactory.CreateSuccessResponse(200, user);
+          
 
         }
     }

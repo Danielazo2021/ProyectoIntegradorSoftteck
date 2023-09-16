@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 using ProyectoIntegradorSoftteck.Services.Interfaces;
@@ -19,71 +20,75 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         [HttpGet("proyecto")]
-        public async Task<ActionResult<List<Proyecto>>> ObtenerProyectos()
+        public async Task<IActionResult> ObtenerProyectos()
         {
             var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectos();
 
             if (respuesta != null)
             {
-                return Ok(respuesta);
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+              
             }
-            return BadRequest("Error al consultar lista de proyectos");
+            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
+          
         }
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Proyecto>> ObtenerProyecto(int id)
+        public async Task<IActionResult> ObtenerProyecto(int id)
         {
             var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectoPorId(id);
 
             if (respuesta != null)
             {
-                return Ok(respuesta);
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
             }
-            return BadRequest("Error al buscar el proyecto, o proyecto no existe");
+           
+            return ResponseFactory.CreateErrorResponse(404, "Error al buscar el proyecto, o proyecto no existe");
         }
 
 
 
         [HttpPost]
-        public async Task<ActionResult<String>> InsertarProyecto(ProyectoDto proyecto)
+        public async Task<IActionResult> InsertarProyecto(ProyectoDto proyecto)
         {
 
             var respuesta = await _unitOfWork.ProyectoRepository.InsertarProyecto(proyecto);
             if (respuesta)
             {
-                return Ok("Proyecto registrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto registrado con exito");
+                
             }
-            return BadRequest("Error al ingresar el proyecto");
+            return ResponseFactory.CreateErrorResponse(404, "Error al ingresar el proyecto");
         }
 
 
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Proyecto>> ModificarProyecto(Proyecto proyecto)
+        public async Task<IActionResult> ModificarProyecto(Proyecto proyecto)
         // momentanemente falta implementar en repository
         {
             var respuesta = await _unitOfWork.ProyectoRepository.ModificarProyecto(proyecto);
             if (respuesta)
             {
-                return Ok("Proyecto modificado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto modificado con exito");
             }
 
-            return BadRequest("Error al modificar el proyecto, asegurese que el proyecto exista");
+            return ResponseFactory.CreateErrorResponse(404, "Error al modificar el proyecto, asegurese que el proyecto exista");
         }
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> BorrarProyecto(int id)
+        public async Task<IActionResult> BorrarProyecto(int id)
         {
             var respuesta = await _unitOfWork.ProyectoRepository.BorrarProyecto(id);
 
             if (respuesta)
             {
-                return Ok("Proyecto borrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto borrado con exito");
             }
-            return NotFound("No se puede borrar el proyecto, consulte que exista el proyecto que quiere borrar");
+            return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el proyecto, consulte que exista el proyecto que quiere borrar");
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ProyectoIntegradorSoftteck.DTOs
+﻿using ProyectoIntegradorSoftteck.Entities;
+
+namespace ProyectoIntegradorSoftteck.DTOs
 {
     public class TrabajoDto
     {
@@ -11,8 +13,9 @@
         public double Costo { get; set; }
         public int Cod_proyecto { get; set; }
         public int Cod_servicio { get; set; }
+      
 
-    
+
 
     }
 }

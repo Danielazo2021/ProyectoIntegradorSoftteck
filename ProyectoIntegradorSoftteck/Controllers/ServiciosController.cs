@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 using ProyectoIntegradorSoftteck.Services.Interfaces;
@@ -18,71 +19,76 @@ namespace ProyectoIntegradorSoftteck.Controllers
            }
 
            [HttpGet("servicio")]
-           public async Task<ActionResult<List<Servicio>>> ObtenerServicios()
+           public async Task<IActionResult> ObtenerServicios()
            {
                var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicios();
 
                if (respuesta != null)
-               {
-                   return Ok(respuesta);
-               }
-               return BadRequest("Error al consultar lista de servicios");
+               {       
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+               }           
+
+                return ResponseFactory.CreateErrorResponse(404,"Error al consultar lista de servicios");
+        
            }
 
 
            [HttpGet("{id}")]
-           public async Task<ActionResult<Servicio>> ObtenerServicio(int id)
+           public async Task<IActionResult> ObtenerServicio(int id)
            {
                var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicioPorId(id);
 
                if (respuesta != null)
                {
-                   return Ok(respuesta);
+                   
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+
+
                }
-               return BadRequest("Error al buscar el servicio, o servicio no existe");
+            return ResponseFactory.CreateErrorResponse(404, "Error al buscar el servicio, o servicio no existe");
            }
 
 
 
            [HttpPost]
-           public async Task<ActionResult<String>> InsertarServicio(ServicioDto servicioDto)
+           public async Task<IActionResult> InsertarServicio(ServicioDto servicioDto)
            {
 
                var respuesta = await _unitOfWork.ServicioRepository.InsertarServicio(servicioDto);
                if (respuesta)
                {
-                   return Ok("Servicio registrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio registrado con exito");
                }
-               return BadRequest("Error al ingresar el servicio");
+                 return ResponseFactory.CreateErrorResponse(404, "Error al ingresar el servicio");
            }
 
 
 
 
            [HttpPut("{id}")]
-           public async Task<ActionResult<Servicio>> ModificarServicio(Servicio servicio)
+           public async Task<IActionResult> ModificarServicio(Servicio servicio)
            // momentanemente falta implementar en repository
            {
                var respuesta = await _unitOfWork.ServicioRepository.ModificarServicio(servicio);
                if (respuesta)
                {
-                   return Ok("Servicio modificado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Servicio modificado con exito");
                }
 
-               return BadRequest("Error al modificar el servicio, asegurese que el servicio exista");
+            return ResponseFactory.CreateErrorResponse(404, "Error al modificar el servicio, asegurese que el servicio exista");
            }
 
 
            [HttpDelete("{id}")]
-           public async Task<ActionResult<bool>> BorrarServicio(int id)
+           public async Task<IActionResult> BorrarServicio(int id)
            {
                var respuesta = await _unitOfWork.ServicioRepository.BorrarServicio(id);
 
                if (respuesta)
                {
-                   return Ok("Servicio borrado con exito");
+                return ResponseFactory.CreateSuccessResponse(404, "Servicio borrado con exito");
                }
-               return NotFound("No se puede borrar el servicio, consulte que exista el servicio que quiere borrar");
+            return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el servicio, consulte que exista el servicio que quiere borrar");
            }
     }
 }

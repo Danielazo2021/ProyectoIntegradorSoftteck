@@ -60,13 +60,13 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Required]
         [Column("project_id")]
         public int Cod_proyecto { get; set; }
-        public Proyecto? Proyecto { get; set; }
+        public virtual Proyecto? Proyecto { get; set; }
 
 
         [Required]
         [Column("service_id")]
         public int Cod_servicio { get; set; }
-        public Servicio? Servicio { get; set; }
+        public virtual Servicio? Servicio { get; set; }
 
 
     }
