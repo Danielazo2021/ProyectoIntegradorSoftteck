@@ -45,16 +45,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
             try
             {
-                var trabajoNvo = new Trabajo();
-                trabajoNvo.Cod_proyecto = trabajoDto.CodProyecto;
-                trabajoNvo.Cod_servicio = trabajoDto.CodServicio;
-                trabajoNvo.Fecha = trabajoDto.Fecha;
-                trabajoNvo.ValorHora = trabajoDto.ValorHora;
-                trabajoNvo.CantHoras= trabajoDto.CantHoras;
-                trabajoNvo.Costo=trabajoDto.Costo;
-                    
-
-
+                var trabajoNvo = new Trabajo(trabajoDto);
+               
                 _context.Trabajos.Add(trabajoNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
@@ -96,21 +88,23 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         }
 
         public async Task<List<Trabajo>> ObtenerTrabajos()
-        {
+        {         
+
             List<Trabajo> listaTrabajos = new List<Trabajo>();
             try
             {
-                listaTrabajos = await _context.Trabajos.ToListAsync();
-
+                listaTrabajos = await _context.Trabajos
+                    .Include(x => x.Proyecto)
+                    .Include(x => x.Servicio)
+                    .ToListAsync();
             }
             catch (Exception)
             {
-
             }
 
             return listaTrabajos;
-
-
         }
+
     }
+    
 }

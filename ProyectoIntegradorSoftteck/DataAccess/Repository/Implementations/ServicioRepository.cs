@@ -48,11 +48,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
             try
             {
-                var servicioNvo = new Servicio();
-                servicioNvo.Descr=servicioDto.Descr;
-                servicioNvo.Estado = servicioDto.Estado;
-                servicioNvo.ValorHora = servicioDto.ValorHora;
-                
+                var servicioNvo = new Servicio(servicioDto);                
 
                 _context.Servicios.Add(servicioNvo);
                 await _context.SaveChangesAsync();
@@ -66,7 +62,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return respuesta;
 
         }
-
 
 
         public async Task<bool> ModificarServicio(Servicio servicio)

@@ -34,11 +34,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
                 return false;
             }
 
-
-
         }
-
-
 
         public async Task<bool> InsertarProyecto(ProyectoDto proyecto)
         {
@@ -46,12 +42,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
             try
             {
-                var proyectoNvo= new Proyecto();
-                proyectoNvo.Nombre = proyecto.Nombre;
-                proyectoNvo.Direccion = proyecto.Direccion;
-                proyectoNvo.Estado= proyecto.Estado;
-               
-
+                var proyectoNvo= new Proyecto(proyecto);
 
                 _context.Proyectos.Add(proyectoNvo);
                 await _context.SaveChangesAsync();
@@ -99,7 +90,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             try
             {
                 listaProyectos = await _context.Proyectos.ToListAsync();
-
+               
             }
             catch (Exception)
             {
