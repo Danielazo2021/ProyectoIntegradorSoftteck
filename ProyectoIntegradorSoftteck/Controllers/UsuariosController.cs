@@ -64,10 +64,10 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
   
         [HttpPut("{id}")]
-        public async Task<ActionResult<Usuario>> ModificarUsuario(Usuario usuarioDto)
+        public async Task<ActionResult<Usuario>> ModificarUsuario(int id, Usuario usuarioDto)
             // momentanemente falta implementar en repository
         {
-            var respuesta = await _unitOfWork.UsuarioRepository.ModificarUsuario(usuarioDto);
+            var respuesta = await _unitOfWork.UsuarioRepository.ModificarUsuario(usuarioDto, id);
             if (respuesta)
             {
                 return Ok("Usuario modificado con exito");
