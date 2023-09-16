@@ -12,8 +12,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
               {
                   CodTrabajo = 11,
                   Fecha = new DateTime(23,5,1),
-                  cod_proyecto = 13,
-                  cod_servicio = 11,
+                  Cod_proyecto = 13,
+                  Cod_servicio= 11,
                   CantHoras = 120,
                   ValorHora= 1500,
                   Costo=180000
@@ -22,8 +22,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                {
                    CodTrabajo = 12,
                    Fecha = new DateTime(23, 7, 11),
-                   cod_proyecto = 12,
-                   cod_servicio = 11,
+                   Cod_proyecto = 12,
+                   Cod_servicio = 11,
                    CantHoras = 50,
                    ValorHora = 1500,
                    Costo = 75000
@@ -32,8 +32,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                 {
                     CodTrabajo = 13,
                     Fecha = new DateTime(23, 7, 18),
-                    cod_proyecto = 12,
-                    cod_servicio = 12,
+                    Cod_proyecto = 12,
+                    Cod_servicio = 12,
                     CantHoras = 20,
                     ValorHora = 750,
                     Costo = 15000

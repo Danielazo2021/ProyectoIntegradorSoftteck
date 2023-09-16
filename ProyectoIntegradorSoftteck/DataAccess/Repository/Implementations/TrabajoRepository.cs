@@ -46,8 +46,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             try
             {
                 var trabajoNvo = new Trabajo();
-                trabajoNvo.cod_proyecto = trabajoDto.CodProyecto;
-                trabajoNvo.cod_servicio = trabajoDto.CodServicio;
+                trabajoNvo.Cod_proyecto = trabajoDto.CodProyecto;
+                trabajoNvo.Cod_servicio = trabajoDto.CodServicio;
                 trabajoNvo.Fecha = trabajoDto.Fecha;
                 trabajoNvo.ValorHora = trabajoDto.ValorHora;
                 trabajoNvo.CantHoras= trabajoDto.CantHoras;

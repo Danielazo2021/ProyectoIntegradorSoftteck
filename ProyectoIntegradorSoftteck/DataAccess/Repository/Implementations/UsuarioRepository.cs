@@ -4,28 +4,19 @@ using ProyectoIntegradorSoftteck.DataAccess;
 using ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
+using ProyectoIntegradorSoftteck.Helpers;
+using System.ComponentModel;
 using System.Net;
 
 namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 {
-
-
     public class UsuarioRepository :  Repository<Usuario>,IUsuarioRepository
     {               
-
         public UsuarioRepository(ContextDB context): base(context)
         {
-            
-        }
-        
+        }       
 
-//        Ver de apadtar para login
-        //public async Task<Usuario?> AutenticateCredentials(AutenticateDto dto)
-        //{
-        //    return await _context.Users.SingleOrDefaultAsync(x => x.Email == dto.Email && x.Password == dto.Password);
-        //}
-
-        public async Task<bool> BorrarUsuario(int dni)
+    public async Task<bool> BorrarUsuario(int dni)
         {
             try
             {
@@ -44,10 +35,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             catch (Exception)
             {
                 return false;
-            }
-
-
-
+            } 
         }
 
 
@@ -58,12 +46,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
             try
             {
-                var usuarioNvo = new Usuario();
-                usuarioNvo.Dni= usuarioDto.Dni;
-                usuarioNvo.Contrasena= usuarioDto.Contrasena;
-                usuarioNvo.Nombre= usuarioDto.Nombre;
-                usuarioNvo.Tipo= usuarioDto.Tipo;
-
+                var usuarioNvo = new Usuario(usuarioDto);
+                
                 _context.Usuarios.Add(usuarioNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
@@ -78,8 +62,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         }
 
 
-
-        public async Task<bool> ModificarUsuario(Usuario usuario)
+        public async Task<bool> ModificarUsuario(Usuario usuario, int dni)
         {
             //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
             //despues hacer un update en la se y un savechange
@@ -120,6 +103,10 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return listaUsuarios;
 
 
+        }
+        public async Task<Usuario?> AuthenticateCredentials(AuthenticateDto dto)
+        {
+            return await _context.Usuarios.SingleOrDefaultAsync(x => x.Nombre == dto.Nombre && x.Contrasena == PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre));
         }
 
     }

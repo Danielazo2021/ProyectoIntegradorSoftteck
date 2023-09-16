@@ -50,40 +50,29 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
     
                 if (existingEntity == null)
                 {
-                    return false; // La entidad no existe en la base de datos, no se puede modificar.
+                    return false; 
                 }
 
-                // Copia los valores de las propiedades de la entidad que deseas modificar
-                // a la entidad existente en la base de datos.
                 _context.Entry(existingEntity).CurrentValues.SetValues(entity);
-
-                // Guarda los cambios en la base de datos
+                
                 await _context.SaveChangesAsync();
                 return true;
-            
-
-            
+                        
         }
 
 
 
         public async Task<T> ObtenerPorDni(int dni)
-        {
-           
+        {           
              var entity = await _context.Set<T>().FindAsync(dni);
             return entity;
         }
-
-
-
-
 
         public async Task<List<T>> ObtenerTodos()
         {
             var prueba = await _context.Set<T>().ToListAsync();
             return prueba;
         }
-
 
     }
 }

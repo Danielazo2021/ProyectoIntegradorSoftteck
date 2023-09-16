@@ -1,8 +1,8 @@
 ﻿namespace ProyectoIntegradorSoftteck.DTOs
 {
-    public class LoginDto
+    public class AuthenticateDto
     {
-        public string Usuario { get; set; }
+        public string Nombre { get; set; }
         public string Contrasena { get; set; }
     }
 }
