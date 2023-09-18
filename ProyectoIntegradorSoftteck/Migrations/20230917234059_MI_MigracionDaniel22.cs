@@ -4,7 +4,7 @@
 
 namespace ProyectoIntegradorSoftteck.Migrations
 {
-    public partial class MI_MigracionDaniel4 : Migration
+    public partial class MI_MigracionDaniel22 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

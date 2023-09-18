@@ -33,9 +33,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             {
                 return false;
             }
-
-
-
         }
 
 
@@ -43,9 +40,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         public async Task<bool> InsertarServicio(ServicioDto servicioDto)
         {
             bool respuesta;
-
-
-
             try
             {
                 var servicioNvo = new Servicio(servicioDto);                
@@ -59,16 +53,26 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             {
                 respuesta = false;
             }
-            return respuesta;
 
+            return respuesta;
         }
 
 
-        public async Task<bool> ModificarServicio(Servicio servicio)
+        public async Task<bool> ModificarServicio(Servicio servicioModificado)
         {
-            //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
-            //despues hacer un update en la se y un savechange
-            throw new NotImplementedException();
+
+            var servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.CodServicio == servicioModificado.CodServicio);
+
+            if (servicio == null) { return false; }
+
+            servicio.Descr = servicioModificado.Descr;
+            servicio.Estado = servicioModificado.Estado;
+            servicio.ValorHora = servicioModificado.ValorHora;
+            
+            _context.Servicios.Update(servicio);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Servicio> ObtenerServicioPorId(int cod)
@@ -101,6 +105,46 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             }
             return listaServicios;            
         }
+
+        public async Task<List<Servicio>> ObtenerServiciosActivos()
+        {
+            List<Servicio> listaServicios = new List<Servicio>();
+            try
+            {
+                listaServicios = await _context.Servicios.Where(x=>x.Estado== true).ToListAsync();
+            }
+            catch (Exception)
+            {
+            }
+            return listaServicios;
+        }
+
+
+       
+         public async Task<List<Servicio>> ObtenerServiciosPaginado(int pagina, int registrosPorPagina)
+        {
+            try
+            {
+                var query = _context.Servicios.AsQueryable();
+
+                var servicios = await query
+                    .OrderBy(p => p.CodServicio) 
+                    .Skip((pagina - 1) * registrosPorPagina) 
+                    .Take(registrosPorPagina) 
+                    .ToListAsync();
+
+               
+
+                return servicios;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
 
     }
 }

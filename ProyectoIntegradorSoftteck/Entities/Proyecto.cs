@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoIntegradorSoftteck.Entities
 {
-    [Table("proyectos")]
+    [Table("projects")]
     public class Proyecto
     {
         public Proyecto(ProyectoDto dto, int id)
@@ -42,6 +42,8 @@ namespace ProyectoIntegradorSoftteck.Entities
 
         [Required]
         [Column("state")]
-        public int Estado { get; set; }
+        public Estado Estado { get; set; }
+
+      
     }
 }

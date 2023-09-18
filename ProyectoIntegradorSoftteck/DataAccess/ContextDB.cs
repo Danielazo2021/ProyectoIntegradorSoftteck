@@ -18,6 +18,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+        
+
             // base.OnModelCreating(modelBuilder);
             var seeders = new List<IEntitySeeder>
             {

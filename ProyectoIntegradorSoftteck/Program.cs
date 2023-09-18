@@ -61,20 +61,20 @@ builder.Services.AddDbContext<ContextDB>(options =>
            .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
 });
 
-//builder.Services.AddAuthorization(option =>
-//{
-//    option.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
-//});
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("Administrador ", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
+});
 
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
-//           {
-//               ValidateIssuerSigningKey = true,
-//               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-//               ValidateIssuer = false,
-//               ValidateAudience = false
-//           });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
+           {
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+               ValidateIssuer = false,
+               ValidateAudience = false
+           });
 
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();

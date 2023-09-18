@@ -15,8 +15,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                   Cod_proyecto = 13,
                   Cod_servicio= 11,
                   CantHoras = 120,
-                  ValorHora= 1500,
-                  Costo=180000
+                  ValorHora= 150000,
+                  Costo=18000000
               },
                new Trabajo
                {
@@ -25,8 +25,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                    Cod_proyecto = 12,
                    Cod_servicio = 11,
                    CantHoras = 50,
-                   ValorHora = 1500,
-                   Costo = 75000
+                   ValorHora = 150000,
+                   Costo = 7500000
                },
                 new Trabajo
                 {
@@ -35,8 +35,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                     Cod_proyecto = 12,
                     Cod_servicio = 12,
                     CantHoras = 20,
-                    ValorHora = 750,
-                    Costo = 15000
+                    ValorHora = 75000,
+                    Costo = 1500000
                 });
         }
     }

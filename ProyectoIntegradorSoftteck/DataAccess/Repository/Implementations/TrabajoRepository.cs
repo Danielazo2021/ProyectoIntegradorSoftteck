@@ -32,12 +32,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             {
                 return false;
             }
-
-
-
         }
-
-
 
         public async Task<bool> InsertarTrabajo(TrabajoDto trabajoDto)
         {
@@ -60,13 +55,23 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
-
-
-        public async Task<bool> ModificarTrabajo(Trabajo trabajo)
+        public async Task<bool> ModificarTrabajo(Trabajo trabajoModificado)
         {
-            //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
-            //despues hacer un update en la se y un savechange
-            throw new NotImplementedException();
+            var trabajo = await _context.Trabajos.FirstOrDefaultAsync(x => x.CodTrabajo == trabajoModificado.CodTrabajo);
+
+            if (trabajo == null) { return false; }
+           
+            trabajo.Cod_servicio = trabajoModificado.Cod_servicio;
+            trabajo.Fecha = trabajoModificado.Fecha;           
+            trabajo.Cod_proyecto = trabajoModificado.Cod_proyecto;
+            trabajo.Costo = trabajoModificado.Costo;
+            trabajo.CantHoras = trabajoModificado.CantHoras;
+
+
+            _context.Trabajos.Update(trabajo);
+           // await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Trabajo> ObtenerTrabajoPorId(int cod)
@@ -87,15 +92,15 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return null;
         }
 
+      
         public async Task<List<Trabajo>> ObtenerTrabajos()
-        {         
-
+        {
             List<Trabajo> listaTrabajos = new List<Trabajo>();
             try
             {
                 listaTrabajos = await _context.Trabajos
-                    .Include(x => x.Proyecto)
-                    .Include(x => x.Servicio)
+                    .Include(t => t.Proyecto)
+                    .Include(t => t.Servicio)
                     .ToListAsync();
             }
             catch (Exception)
@@ -103,6 +108,32 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             }
 
             return listaTrabajos;
+        }
+
+        public async Task<List<Trabajo>> ObtenerTrabajosPaginado(int pagina, int registrosPorPagina)
+        {
+            try
+            {
+                var query = _context.Trabajos
+                                    .Include(t => t.Proyecto)
+                                    .Include(t => t.Servicio)
+                                    .AsQueryable();
+
+                var trabajos = await query
+                    .OrderBy(p => p.CodTrabajo) 
+                    .Skip((pagina - 1) * registrosPorPagina) 
+                    .Take(registrosPorPagina) 
+                    .ToListAsync();
+
+              
+
+                return trabajos;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

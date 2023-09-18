@@ -1,4 +1,5 @@
 ﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
@@ -10,6 +11,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TrabajosController : ControllerBase
     {
 
@@ -19,7 +21,8 @@ namespace ProyectoIntegradorSoftteck.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet("trabajo")]
+        [HttpGet()]
+        [AllowAnonymous]
         public async Task<IActionResult> ObtenerTrabajos()
         {
             var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajos();
@@ -32,7 +35,24 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
 
+        [HttpGet("{pagina}/{registrosPorPagina}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerTrabajosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
+        {
+            var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajosPaginado(pagina, registrosPorPagina);
+
+            if (respuesta != null)
+            {
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+            }
+            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de trabajos");
+        }
+
+        
+
+
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> ObtenerTrabajo(int id)
         {
             var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajoPorId(id);
@@ -62,10 +82,9 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> ModificarTrabajo(Trabajo trabajo)
-        // momentanemente falta implementar en repository
+        public async Task<IActionResult> ModificarTrabajo([FromRoute] int id, TrabajoDto trabajoDto)
         {
-            var respuesta = await _unitOfWork.TrabajoRepository.ModificarTrabajo(trabajo);
+            var respuesta = await _unitOfWork.TrabajoRepository.ModificarTrabajo(new Trabajo (trabajoDto, id));
             if (respuesta)
             {
                 return ResponseFactory.CreateSuccessResponse(200, "Trabajo modificado con exito");
