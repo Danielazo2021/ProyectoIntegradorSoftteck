@@ -62,11 +62,22 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         }
 
 
-        public async Task<bool> ModificarUsuario(Usuario usuario, int dni)
+        public async Task<bool> ModificarUsuario(Usuario usuarioModificado)
         {
-            //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
-            //despues hacer un update en la se y un savechange
-            throw new NotImplementedException();
+            var user = await _context.Usuarios.FirstOrDefaultAsync(x => x.CodUsuario == usuarioModificado.CodUsuario);
+          
+            if (user == null) { return false; }
+
+            user.Nombre = usuarioModificado.Nombre;
+            user.Dni = usuarioModificado.Dni;
+            user.Tipo = usuarioModificado.Tipo;
+            user.Contrasena = usuarioModificado.Contrasena;
+
+            _context.Usuarios.Update(user);
+             await _context.SaveChangesAsync();
+
+            return true;
+
         }
 
         public async Task<Usuario> ObtenerUsuarioPorId(int dni)
@@ -102,8 +113,30 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
             return listaUsuarios;
 
-
         }
+
+        public async Task<List<Usuario>> ObtenerUsuariosPaginado(int pagina, int registrosPorPagina)
+        {
+            try
+            {
+                var query = _context.Usuarios.AsQueryable();
+
+                var usuarios = await query
+                    .OrderBy(p => p.CodUsuario)
+                    .Skip((pagina - 1) * registrosPorPagina)
+                    .Take(registrosPorPagina)
+                    .ToListAsync();
+
+                return usuarios;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
+
         public async Task<Usuario?> AuthenticateCredentials(AuthenticateDto dto)
         {
             return await _context.Usuarios.SingleOrDefaultAsync(x => x.Nombre == dto.Nombre && x.Contrasena == PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre));

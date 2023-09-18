@@ -1,4 +1,5 @@
 ﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
@@ -10,6 +11,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServiciosController : ControllerBase
     {
           private readonly IUnitOfWork _unitOfWork;
@@ -18,42 +20,79 @@ namespace ProyectoIntegradorSoftteck.Controllers
                _unitOfWork = unitOfWork;
            }
 
-           [HttpGet("servicio")]
-           public async Task<IActionResult> ObtenerServicios()
-           {
-               var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicios();
 
-               if (respuesta != null)
-               {       
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
-               }           
+        [HttpGet()]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerServicios()
+        {
+            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicios();
 
-                return ResponseFactory.CreateErrorResponse(404,"Error al consultar lista de servicios");
+            if (respuesta != null)
+            {       
+            return ResponseFactory.CreateSuccessResponse(200, respuesta);
+            }           
+
+            return ResponseFactory.CreateErrorResponse(404,"Error al consultar lista de servicios");
         
-           }
+        }
 
+       
+        [HttpGet("{pagina}/{registrosPorPagina}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerServiciosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
+        {
+            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServiciosPaginado(pagina, registrosPorPagina);
 
-           [HttpGet("{id}")]
-           public async Task<IActionResult> ObtenerServicio(int id)
-           {
-               var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicioPorId(id);
-
-               if (respuesta != null)
-               {
-                   
+            if (respuesta != null)
+            {
                 return ResponseFactory.CreateSuccessResponse(200, respuesta);
+            }
+
+            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de servicios");
+
+        }
 
 
-               }
-            return ResponseFactory.CreateErrorResponse(404, "Error al buscar el servicio, o servicio no existe");
-           }
+
+        [HttpGet("activos")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerServiciosActivos()
+        {
+            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServiciosActivos();
+
+            if (respuesta != null)
+            {
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+            }
+
+            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de servicios Activos");
+
+        }
+
+
+
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerServicio(int id)
+        {
+            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicioPorId(id);
+
+            if (respuesta != null)
+            {
+                   
+            return ResponseFactory.CreateSuccessResponse(200, respuesta);
+
+
+            }
+        return ResponseFactory.CreateErrorResponse(404, "Error al buscar el servicio, o servicio no existe");
+        }
 
 
 
            [HttpPost]
            public async Task<IActionResult> InsertarServicio(ServicioDto servicioDto)
            {
-
                var respuesta = await _unitOfWork.ServicioRepository.InsertarServicio(servicioDto);
                if (respuesta)
                {
@@ -66,10 +105,9 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
 
            [HttpPut("{id}")]
-           public async Task<IActionResult> ModificarServicio(Servicio servicio)
-           // momentanemente falta implementar en repository
+           public async Task<IActionResult> ModificarServicio([FromRoute] int id, ServicioDto servicioDto)          
            {
-               var respuesta = await _unitOfWork.ServicioRepository.ModificarServicio(servicio);
+               var respuesta = await _unitOfWork.ServicioRepository.ModificarServicio(new Servicio(servicioDto, id));
                if (respuesta)
                {
                 return ResponseFactory.CreateSuccessResponse(200, "Servicio modificado con exito");

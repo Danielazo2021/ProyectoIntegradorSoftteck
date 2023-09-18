@@ -2,7 +2,7 @@
 {
     public enum Tipo
     {
-        Administrador=1,
-        Consultor=2
+        Administrador = 1,
+        Consultor = 2
     }
 }

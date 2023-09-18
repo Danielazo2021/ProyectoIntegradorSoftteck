@@ -11,30 +11,30 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                  new Servicio
                  {
                      CodServicio = 11,
-                     Descr = "Electricidad",
+                     Descr = "Refinamiento de Petróleo Crudo",
                      Estado = true,
-                     ValorHora = 1500
+                     ValorHora = 150000
                  },
                  new Servicio
                  {
                      CodServicio = 12,
-                     Descr = "Plomeria",
+                     Descr = "Desulfuración de Combustibles",
                      Estado = true,
-                     ValorHora = 750
+                     ValorHora = 75000
                  },
                  new Servicio
                  {
                      CodServicio = 13,
-                     Descr = "Carpintería",
+                     Descr = "Mantenimiento y Reparación de Equipos de Refinería",
                      Estado = true,
-                     ValorHora = 900
+                     ValorHora = 90000
                  },
                    new Servicio
                    {
                        CodServicio = 14,
-                       Descr = "Jardineria",
+                       Descr = "Consultoría en Eficiencia Energética y Ambiental",
                        Estado = false,
-                       ValorHora = 900
+                       ValorHora = 90000
                    });
         }
     }

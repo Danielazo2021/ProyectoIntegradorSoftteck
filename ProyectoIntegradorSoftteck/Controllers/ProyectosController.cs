@@ -1,4 +1,5 @@
 ﻿using AlkemyUmsa.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
@@ -10,16 +11,18 @@ namespace ProyectoIntegradorSoftteck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProyectosController : ControllerBase
     {
 
-         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         public ProyectosController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet("proyecto")]
+        [HttpGet()]
+        [AllowAnonymous]
         public async Task<IActionResult> ObtenerProyectos()
         {
             var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectos();
@@ -27,14 +30,48 @@ namespace ProyectoIntegradorSoftteck.Controllers
             if (respuesta != null)
             {
                 return ResponseFactory.CreateSuccessResponse(200, respuesta);
-              
+
             }
             return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
-          
+
+        }
+
+        [HttpGet("{pagina}/{registrosPorPagina}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerProyectosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
+        {
+            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectosPaginado(pagina, registrosPorPagina);
+
+            if (respuesta != null)
+            {
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+
+            }
+            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
+
+        }
+
+        //ObtenerProyectosPaginado
+
+
+        [HttpGet("por_estado")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ObtenerProyectosPorEstado(Estado estado)
+        {
+            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectosPorEstado(estado);
+
+            if (respuesta != null)
+            {
+                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+
+            }
+            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
+
         }
 
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> ObtenerProyecto(int id)
         {
             var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectoPorId(id);
@@ -66,10 +103,9 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> ModificarProyecto(Proyecto proyecto)
-        // momentanemente falta implementar en repository
+        public async Task<IActionResult> ModificarProyecto([FromRoute] int id, ProyectoDto proyectoDto)
         {
-            var respuesta = await _unitOfWork.ProyectoRepository.ModificarProyecto(proyecto);
+            var respuesta = await _unitOfWork.ProyectoRepository.ModificarProyecto( new Proyecto (proyectoDto, id));
             if (respuesta)
             {
                 return ResponseFactory.CreateSuccessResponse(200, "Proyecto modificado con exito");

@@ -68,7 +68,12 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return entity;
         }
 
-        public async Task<List<T>> ObtenerTodos()
+        public async Task<List<T>> ObtenerTodos() 
+        {
+            var prueba = await _context.Set<T>().ToListAsync();
+            return prueba;
+        }
+        public async Task<List<T>> ObtenerTodosPaginado(int pagina, int registrosPorPagina) // modif
         {
             var prueba = await _context.Set<T>().ToListAsync();
             return prueba;

@@ -6,7 +6,8 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Interfaces
     {
         Task<bool> Insertar(T entity);
         Task<T> ObtenerPorDni(int dni);
-        Task<List<T>> ObtenerTodos();
+        Task<List<T>> ObtenerTodos(); 
+        Task<List<T>> ObtenerTodosPaginado(int pagina, int registrosPorPagina); // modif
         Task<bool> Borrar(int dni);
         Task<bool> Modificar(T entity);
 

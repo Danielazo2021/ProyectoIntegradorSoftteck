@@ -47,29 +47,29 @@ namespace ProyectoIntegradorSoftteck.Migrations
 
                     b.HasKey("CodProyecto");
 
-                    b.ToTable("proyectos");
+                    b.ToTable("projects");
 
                     b.HasData(
                         new
                         {
                             CodProyecto = 11,
                             Direccion = "Libertad 180 Carloz Paz",
-                            Estado = 2,
-                            Nombre = "Renovacion estudio Gomez"
+                            Estado = 3,
+                            Nombre = "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia"
                         },
                         new
                         {
                             CodProyecto = 12,
                             Direccion = "Av San Martin S/N Rio Cuarto",
                             Estado = 1,
-                            Nombre = "Ampliacion Anfiteatro RC"
+                            Nombre = "Programa de Mantenimiento y Actualización de Equipos"
                         },
                         new
                         {
                             CodProyecto = 13,
                             Direccion = "Colon 1050 Cordoba Capital",
-                            Estado = 3,
-                            Nombre = "Renovacion Teatro Colon"
+                            Estado = 2,
+                            Nombre = "Modernización de la Refinería para Carmelo SA"
                         });
                 });
 
@@ -103,30 +103,30 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         new
                         {
                             CodServicio = 11,
-                            Descr = "Electricidad",
+                            Descr = "Refinamiento de Petróleo Crudo",
                             Estado = true,
-                            ValorHora = 1500.0
+                            ValorHora = 150000.0
                         },
                         new
                         {
                             CodServicio = 12,
-                            Descr = "Plomeria",
+                            Descr = "Desulfuración de Combustibles",
                             Estado = true,
-                            ValorHora = 750.0
+                            ValorHora = 75000.0
                         },
                         new
                         {
                             CodServicio = 13,
-                            Descr = "Carpintería",
+                            Descr = "Mantenimiento y Reparación de Equipos de Refinería",
                             Estado = true,
-                            ValorHora = 900.0
+                            ValorHora = 90000.0
                         },
                         new
                         {
                             CodServicio = 14,
-                            Descr = "Jardineria",
+                            Descr = "Consultoría en Eficiencia Energética y Ambiental",
                             Estado = false,
-                            ValorHora = 900.0
+                            ValorHora = 90000.0
                         });
                 });
 
@@ -159,21 +159,15 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("date");
 
-                    b.Property<int?>("ProyectoCodProyecto")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServicioCodServicio")
-                        .HasColumnType("int");
-
                     b.Property<double>("ValorHora")
                         .HasColumnType("float")
                         .HasColumnName("value_hour");
 
                     b.HasKey("CodTrabajo");
 
-                    b.HasIndex("ProyectoCodProyecto");
+                    b.HasIndex("Cod_proyecto");
 
-                    b.HasIndex("ServicioCodServicio");
+                    b.HasIndex("Cod_servicio");
 
                     b.ToTable("works");
 
@@ -184,9 +178,9 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CantHoras = 120,
                             Cod_proyecto = 13,
                             Cod_servicio = 11,
-                            Costo = 180000.0,
+                            Costo = 18000000.0,
                             Fecha = new DateTime(23, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ValorHora = 1500.0
+                            ValorHora = 150000.0
                         },
                         new
                         {
@@ -194,9 +188,9 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CantHoras = 50,
                             Cod_proyecto = 12,
                             Cod_servicio = 11,
-                            Costo = 75000.0,
+                            Costo = 7500000.0,
                             Fecha = new DateTime(23, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ValorHora = 1500.0
+                            ValorHora = 150000.0
                         },
                         new
                         {
@@ -204,9 +198,9 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CantHoras = 20,
                             Cod_proyecto = 12,
                             Cod_servicio = 12,
-                            Costo = 15000.0,
+                            Costo = 1500000.0,
                             Fecha = new DateTime(23, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ValorHora = 750.0
+                            ValorHora = 75000.0
                         });
                 });
 
@@ -272,11 +266,15 @@ namespace ProyectoIntegradorSoftteck.Migrations
                 {
                     b.HasOne("ProyectoIntegradorSoftteck.Entities.Proyecto", "Proyecto")
                         .WithMany()
-                        .HasForeignKey("ProyectoCodProyecto");
+                        .HasForeignKey("Cod_proyecto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProyectoIntegradorSoftteck.Entities.Servicio", "Servicio")
                         .WithMany()
-                        .HasForeignKey("ServicioCodServicio");
+                        .HasForeignKey("Cod_servicio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Proyecto");
 

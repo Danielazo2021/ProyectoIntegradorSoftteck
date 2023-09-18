@@ -59,11 +59,20 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
 
 
-        public async Task<bool> ModificarProyecto(Proyecto proyecto)
+        public async Task<bool> ModificarProyecto(Proyecto proyectoModificado)
         {
-            //buscar el con el id que vino por parametro en la base y setearle el resto de los cambios,
-            //despues hacer un update en la se y un savechange
-            throw new NotImplementedException();
+            var proyecto = await _context.Proyectos.FirstOrDefaultAsync(x => x.CodProyecto == proyectoModificado.CodProyecto);
+
+            if (proyecto == null) { return false; }
+
+            proyecto.Nombre = proyectoModificado.Nombre;
+            proyecto.Direccion = proyectoModificado.Direccion;
+            proyecto.Estado = proyectoModificado.Estado;
+
+            _context.Proyectos.Update(proyecto);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Proyecto> ObtenerProyectoPorId(int cod)
@@ -96,11 +105,52 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             {
 
             }
+            return listaProyectos;
+
+        }
+
+        public async Task<List<Proyecto>> ObtenerProyectosPorEstado(Estado estado)
+        {
+            List<Proyecto> listaProyectos = new List<Proyecto>();
+            try
+            {
+                listaProyectos = await _context.Proyectos.Where(x => x.Estado== estado).ToListAsync();
+
+            }
+            catch (Exception)
+            {
+
+            }
 
             return listaProyectos;
 
 
         }
+
+       
+        public async Task<List<Proyecto>> ObtenerProyectosPaginado(int pagina, int registrosPorPagina)
+        {
+            try
+            {
+                var query = _context.Proyectos.AsQueryable();
+
+                var proyectos = await query
+                    .OrderBy(p => p.CodProyecto) 
+                    .Skip((pagina - 1) * registrosPorPagina) 
+                    .Take(registrosPorPagina) 
+                    .ToListAsync();
+
+                
+
+                return proyectos;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
 
     }
 }

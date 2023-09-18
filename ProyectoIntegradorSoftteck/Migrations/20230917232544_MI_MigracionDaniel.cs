@@ -10,7 +10,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "proyectos",
+                name: "projects",
                 columns: table => new
                 {
                     project_id = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_proyectos", x => x.project_id);
+                    table.PrimaryKey("PK_projects", x => x.project_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,33 +66,33 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     value_hour = table.Column<double>(type: "float", nullable: false),
                     cost = table.Column<double>(type: "float", nullable: false),
                     project_id = table.Column<int>(type: "int", nullable: false),
-                    ProyectoCodProyecto = table.Column<int>(type: "int", nullable: true),
-                    service_id = table.Column<int>(type: "int", nullable: false),
-                    ServicioCodServicio = table.Column<int>(type: "int", nullable: true)
+                    service_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_works", x => x.work_id);
                     table.ForeignKey(
-                        name: "FK_works_proyectos_ProyectoCodProyecto",
-                        column: x => x.ProyectoCodProyecto,
-                        principalTable: "proyectos",
-                        principalColumn: "project_id");
+                        name: "FK_works_projects_project_id",
+                        column: x => x.project_id,
+                        principalTable: "projects",
+                        principalColumn: "project_id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_works_services_ServicioCodServicio",
-                        column: x => x.ServicioCodServicio,
+                        name: "FK_works_services_service_id",
+                        column: x => x.service_id,
                         principalTable: "services",
-                        principalColumn: "service_id");
+                        principalColumn: "service_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "proyectos",
+                table: "projects",
                 columns: new[] { "project_id", "adress", "state", "name" },
                 values: new object[,]
                 {
-                    { 11, "Libertad 180 Carloz Paz", 2, "Renovacion estudio Gomez" },
-                    { 12, "Av San Martin S/N Rio Cuarto", 1, "Ampliacion Anfiteatro RC" },
-                    { 13, "Colon 1050 Cordoba Capital", 3, "Renovacion Teatro Colon" }
+                    { 11, "Libertad 180 Carloz Paz", 3, "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia" },
+                    { 12, "Av San Martin S/N Rio Cuarto", 1, "Programa de Mantenimiento y Actualización de Equipos" },
+                    { 13, "Colon 1050 Cordoba Capital", 2, "Modernización de la Refinería para Carmelo SA" }
                 });
 
             migrationBuilder.InsertData(
@@ -100,10 +100,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                 columns: new[] { "service_id", "description", "state", "value_hour" },
                 values: new object[,]
                 {
-                    { 11, "Electricidad", true, 1500.0 },
-                    { 12, "Plomeria", true, 750.0 },
-                    { 13, "Carpintería", true, 900.0 },
-                    { 14, "Jardineria", false, 900.0 }
+                    { 11, "Refinamiento de Petróleo Crudo", true, 150000.0 },
+                    { 12, "Desulfuración de Combustibles", true, 75000.0 },
+                    { 13, "Mantenimiento y Reparación de Equipos de Refinería", true, 90000.0 },
+                    { 14, "Consultoría en Eficiencia Energética y Ambiental", false, 90000.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -118,23 +118,28 @@ namespace ProyectoIntegradorSoftteck.Migrations
 
             migrationBuilder.InsertData(
                 table: "works",
-                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "ProyectoCodProyecto", "ServicioCodServicio", "value_hour" },
-                values: new object[,]
-                {
-                    { 11, 120, 13, 11, 180000.0, new DateTime(23, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 1500.0 },
-                    { 12, 50, 12, 11, 75000.0, new DateTime(23, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 1500.0 },
-                    { 13, 20, 12, 12, 15000.0, new DateTime(23, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 750.0 }
-                });
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
+                values: new object[] { 11, 120, 13, 11, 18000000.0, new DateTime(23, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 150000.0 });
+
+            migrationBuilder.InsertData(
+                table: "works",
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
+                values: new object[] { 12, 50, 12, 11, 7500000.0, new DateTime(23, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 150000.0 });
+
+            migrationBuilder.InsertData(
+                table: "works",
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
+                values: new object[] { 13, 20, 12, 12, 1500000.0, new DateTime(23, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 75000.0 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_works_ProyectoCodProyecto",
+                name: "IX_works_project_id",
                 table: "works",
-                column: "ProyectoCodProyecto");
+                column: "project_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_works_ServicioCodServicio",
+                name: "IX_works_service_id",
                 table: "works",
-                column: "ServicioCodServicio");
+                column: "service_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -146,7 +151,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                 name: "works");
 
             migrationBuilder.DropTable(
-                name: "proyectos");
+                name: "projects");
 
             migrationBuilder.DropTable(
                 name: "services");

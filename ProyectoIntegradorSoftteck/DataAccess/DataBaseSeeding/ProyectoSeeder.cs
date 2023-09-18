@@ -11,23 +11,23 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
              new Proyecto
              {
                  CodProyecto = 11,
-                 Nombre = "Renovacion estudio Gomez",
+                 Nombre = "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia",
                  Direccion = "Libertad 180 Carloz Paz",
-                 Estado = 2
+                 Estado = Estado.Terminado
              },
              new Proyecto
              {
                  CodProyecto = 12,
-                 Nombre = "Ampliacion Anfiteatro RC",
+                 Nombre = "Programa de Mantenimiento y Actualización de Equipos",
                  Direccion = "Av San Martin S/N Rio Cuarto",
-                 Estado = 1
+                 Estado = Estado.Pendiente
              },
              new Proyecto
              {
                  CodProyecto = 13,
-                 Nombre = "Renovacion Teatro Colon",
+                 Nombre = "Modernización de la Refinería para Carmelo SA",
                  Direccion = "Colon 1050 Cordoba Capital",
-                 Estado = 3
+                 Estado = Estado.Confirmado
              });
         }
     }
