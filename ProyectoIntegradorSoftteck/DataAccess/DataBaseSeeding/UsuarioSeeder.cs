@@ -8,6 +8,15 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
     {
         public void SeedDatabase(ModelBuilder modelBuilder)
         {
+            /// <summary>
+            /// Método utilizado para poblar la base de datos con datos iniciales de usuarios.
+            /// </summary>
+            /// <remarks>
+            /// Este método se utiliza para agregar usuarios iniciales a la base de datos al realizar la inicialización.
+            /// Los datos proporcionados son ejemplos y pueden variar según los requisitos del sistema.
+            /// </remarks>
+            /// <param name="modelBuilder">El constructor del modelo de entidad que se utiliza para definir los datos iniciales.</param>
+
             modelBuilder.Entity<Usuario>().HasData(
               new Usuario
               {

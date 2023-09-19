@@ -23,12 +23,18 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Punto de ingreso para el Login de la aplicacion
+        /// Punto de ingreso para el Login de la aplicación.
         /// </summary>
-        /// <param name="dto"></param>
-        /// <returns>devuelvio el login</returns>
+        /// <remarks>
+        /// Permite a los usuarios autenticarse en la aplicación proporcionando sus credenciales.
+        /// </remarks>
+        /// <param name="dto">Los datos de autenticación del usuario.</param>
+        /// <returns>Devuelve el usuario con el Token JWT si la autenticación es exitosa o un mensaje de error si las credenciales son incorrectas.</returns>
+        /// <response code="200">Se devuelve cuando la autenticación es exitosa. Incluye el usuario autenticado y el Token JWT.</response>
+        /// <response code="401">Se devuelve cuando las credenciales son incorrectas o la autenticación falla.</response>
         [HttpPost]
         [AllowAnonymous]
+    
         public async Task<IActionResult> Login(AuthenticateDto dto)
         {
             var userCredentials = await _unitOfWork.UsuarioRepository.AuthenticateCredentials(dto);

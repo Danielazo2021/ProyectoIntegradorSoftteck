@@ -4,6 +4,12 @@ namespace AlkemyUmsa.Infrastructure
 {
     public static class ResponseFactory
     {
+        /// <summary>
+        /// Crea una respuesta HTTP de éxito con el código de estado especificado y datos proporcionados.
+        /// </summary>
+        /// <param name="statusCode">El código de estado HTTP que indica el éxito de la operación.</param>
+        /// <param name="data">Los datos que se incluirán en la respuesta.</param>
+        /// <returns>Una instancia de IActionResult que representa una respuesta de éxito.</returns>
         public static IActionResult CreateSuccessResponse(int statusCode, object? data) 
         {
             var response = new ApiSuccessResponse()
@@ -17,6 +23,12 @@ namespace AlkemyUmsa.Infrastructure
             };
         }
 
+        /// <summary>
+        /// Crea una respuesta HTTP de error con el código de estado especificado y mensajes de error.
+        /// </summary>
+        /// <param name="statusCode">El código de estado HTTP que indica un error.</param>
+        /// <param name="errors">Los mensajes de error que se incluirán en la respuesta.</param>
+        /// <returns>Una instancia de IActionResult que representa una respuesta de error.</returns>
         public static IActionResult CreateErrorResponse(int statusCode, params string[] errors)
         {
             var response = new ApiErrorResponse()

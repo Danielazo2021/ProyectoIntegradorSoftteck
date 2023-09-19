@@ -39,7 +39,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         public async Task<bool> InsertarProyecto(ProyectoDto proyecto)
         {
             bool respuesta;
-
             try
             {
                 var proyectoNvo= new Proyecto(proyecto);
@@ -47,14 +46,12 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
                 _context.Proyectos.Add(proyectoNvo);
                 await _context.SaveChangesAsync();
                 respuesta = true;
-
             }
             catch (Exception)
             {
                 respuesta = false;
             }
             return respuesta;
-
         }
 
 
@@ -63,8 +60,10 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
         {
             var proyecto = await _context.Proyectos.FirstOrDefaultAsync(x => x.CodProyecto == proyectoModificado.CodProyecto);
 
-            if (proyecto == null) { return false; }
-
+            if (proyecto == null) 
+            {
+                return false;
+            }
             proyecto.Nombre = proyectoModificado.Nombre;
             proyecto.Direccion = proyectoModificado.Direccion;
             proyecto.Estado = proyectoModificado.Estado;
@@ -87,7 +86,6 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             }
             catch (Exception ex)
             {
-
             }
 
             return null;
@@ -98,15 +96,12 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             List<Proyecto> listaProyectos = new List<Proyecto>();
             try
             {
-                listaProyectos = await _context.Proyectos.ToListAsync();
-               
+                listaProyectos = await _context.Proyectos.ToListAsync();               
             }
             catch (Exception)
             {
-
             }
             return listaProyectos;
-
         }
 
         public async Task<List<Proyecto>> ObtenerProyectosPorEstado(Estado estado)
@@ -115,16 +110,11 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             try
             {
                 listaProyectos = await _context.Proyectos.Where(x => x.Estado== estado).ToListAsync();
-
             }
             catch (Exception)
             {
-
             }
-
             return listaProyectos;
-
-
         }
 
        
@@ -138,15 +128,12 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
                     .OrderBy(p => p.CodProyecto) 
                     .Skip((pagina - 1) * registrosPorPagina) 
                     .Take(registrosPorPagina) 
-                    .ToListAsync();
-
-                
+                    .ToListAsync();                
 
                 return proyectos;
             }
             catch (Exception)
-            {
-                
+            {                
                 throw;
             }
         }

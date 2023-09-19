@@ -6,19 +6,26 @@ using System.Text;
 
 namespace ProyectoIntegradorSoftteck.Helpers
 {
-    public class TokenJwtHelper   // ver si falta algo mas...
+    public class TokenJwtHelper  
     {
         private IConfiguration _configuration;
         public TokenJwtHelper(IConfiguration configuration)
         {
             _configuration = configuration;
         }
+
+        /// <summary>
+        /// Genera un token JWT (JSON Web Token) basado en la información de un usuario.
+        /// </summary>
+        /// <param name="usuario">El objeto de usuario que se utilizará para generar el token.</param>
+        /// <returns>El token JWT generado como una cadena.</returns>
         public string GenerateToken(Usuario usuario)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]), // traemos el dato del json config
+                new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]), 
                 new Claim(ClaimTypes.NameIdentifier, usuario.CodUsuario.ToString()),
+                new Claim(ClaimTypes.Role, usuario.Tipo.ToString()),
                 new Claim(ClaimTypes.Name , usuario.Nombre),
 
 

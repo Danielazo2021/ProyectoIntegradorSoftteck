@@ -52,42 +52,66 @@ builder.Services.AddSwaggerGen(c =>
                     }, new string[]{ }
                     }
                 });
+    });
 
-});
-
-builder.Services.AddDbContext<ContextDB>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"))
-           .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
-});
-
-builder.Services.AddAuthorization(option =>
-{
-    option.AddPolicy("Administrador ", policy => policy.RequireClaim(ClaimTypes.Role, "1"));
-});
+        builder.Services.AddDbContext<ContextDB>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion"))
+                   .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+        });
 
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-           .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
-           {
-               ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-               ValidateIssuer = false,
-               ValidateAudience = false
-           });
+        builder.Services.AddAuthorization(option =>
+        {
+            option.AddPolicy("Administrador", policy =>
+            {
+                policy.RequireClaim(ClaimTypes.Role, "Administrador");
+            }
+            );
+
+        });
 
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
-builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
-builder.Services.AddScoped<IProyectoRepository, ProyectoRepository>();
+        builder.Services.AddAuthorization(option =>
+        {
+            option.AddPolicy("Consultor", policy =>
+            {        
+                policy.RequireClaim(ClaimTypes.Role, "Consultor");
+            }
+            );
+
+        });
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ConsultorOAdministrador", policy =>
+            {
+                policy.RequireClaim(ClaimTypes.Role, "Consultor", "Administrador");
+            });
+        });
 
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                   .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
+                   {
+                       ValidateIssuerSigningKey = true,
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                       ValidateIssuer = false,
+                       ValidateAudience = false
+                    });
+
+
+    builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+    builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+    builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
+    builder.Services.AddScoped<IProyectoRepository, ProyectoRepository>();
+
+
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWorkService>();
 
 
 
-var app = builder.Build();
+    var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

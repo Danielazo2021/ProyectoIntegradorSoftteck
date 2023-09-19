@@ -3,8 +3,17 @@ using System.Text;
 
 namespace ProyectoIntegradorSoftteck.Helpers
 {
+    /// <summary>
+    /// Clase de utilidad para el cifrado de contraseñas.
+    /// </summary>
     public class PasswordEncryptHelper
     {
+        /// <summary>
+        /// Método que cifra una contraseña utilizando una técnica de salting.
+        /// </summary>
+        /// <param name="password">La contraseña a cifrar.</param>
+        /// <param name="nombre">Un valor único relacionado con el usuario (por ejemplo, su nombre).</param>
+        /// <returns>La contraseña cifrada como una cadena hexadecimal.</returns>        
         public static string EncryptPassword(string password, string nombre)
         {
             var salt = CreateSalt(nombre);
@@ -21,6 +30,11 @@ namespace ProyectoIntegradorSoftteck.Helpers
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Método privado para generar un salt único basado en el nombre del usuario.
+        /// </summary>
+        /// <param name="nombre">Un valor único relacionado con el usuario (por ejemplo, su nombre).</param>
+        /// <returns>Una cadena que representa el salt generado.</returns>
         private static string CreateSalt(string nombre)
         {
             var salt = nombre;

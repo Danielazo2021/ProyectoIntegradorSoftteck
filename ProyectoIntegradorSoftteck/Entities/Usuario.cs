@@ -5,9 +5,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoIntegradorSoftteck.Entities
 {
+    /// <summary>
+    /// Clase que representa un usuario en la aplicación.
+    /// </summary>
+    
     [Table("users")]
     public class Usuario
     {
+     
+        /// <summary>
+        /// Constructor para crear un objeto Usuario a partir de un objeto UsuarioDto.
+        /// </summary>
+        /// <param name="dto">Objeto UsuarioDto con los datos del usuario.</param>
+        
         public Usuario(UsuarioDto dto, int id)
         {
             CodUsuario = id;
@@ -17,6 +27,12 @@ namespace ProyectoIntegradorSoftteck.Entities
             Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre);
 
         }
+
+        /// <summary>
+        /// Constructor para crear un objeto Usuario a partir de un objeto UsuarioDto y un ID específico.
+        /// </summary>
+        /// <param name="dto">Objeto UsuarioDto con los datos del usuario.</param>
+        /// <param name="id">ID único del usuario.</param>
         public Usuario(UsuarioDto dto)
         {
             Nombre = dto.Nombre;
@@ -25,6 +41,10 @@ namespace ProyectoIntegradorSoftteck.Entities
             Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre);
 
         }
+
+        /// <summary>
+        /// Constructor sin argumentos requerido para Entity Framework.
+        /// </summary>
         public Usuario()
         {
 

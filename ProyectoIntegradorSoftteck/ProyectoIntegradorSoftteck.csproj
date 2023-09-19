@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\54351\source\repos\ProyectoIntegradorSoftteck\ProyectoIntegradorSoftteck\bin\Debug\net6.0\documentacion.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\54351\source\repos\ProyectoIntegradorSoftteck\ProyectoIntegradorSoftteck\bin\Debug\net6.0\ProyectoIntegradorSoftteck.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
