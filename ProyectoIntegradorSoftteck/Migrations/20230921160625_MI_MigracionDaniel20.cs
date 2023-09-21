@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProyectoIntegradorSoftteck.Migrations
 {
-    public partial class MI_MigracionDaniel : Migration
+    public partial class MI_MigracionDaniel20 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    state = table.Column<int>(type: "int", nullable: false)
+                    is_active = table.Column<bool>(type: "bit", nullable: false),
+                    state = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +33,8 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     state = table.Column<bool>(type: "bit", nullable: false),
-                    value_hour = table.Column<double>(type: "float", nullable: false)
+                    value_hour = table.Column<double>(type: "float", nullable: false),
+                    is_active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,9 +48,12 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     user_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    user_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     dni = table.Column<int>(type: "int", nullable: false),
                     type = table.Column<int>(type: "int", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    is_active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,6 +70,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     count_hours = table.Column<int>(type: "int", nullable: false),
                     value_hour = table.Column<double>(type: "float", nullable: false),
                     cost = table.Column<double>(type: "float", nullable: false),
+                    is_active = table.Column<bool>(type: "bit", nullable: false),
                     project_id = table.Column<int>(type: "int", nullable: false),
                     service_id = table.Column<int>(type: "int", nullable: false)
                 },
@@ -87,49 +93,49 @@ namespace ProyectoIntegradorSoftteck.Migrations
 
             migrationBuilder.InsertData(
                 table: "projects",
-                columns: new[] { "project_id", "adress", "state", "name" },
+                columns: new[] { "project_id", "adress", "state", "is_active", "name" },
                 values: new object[,]
                 {
-                    { 11, "Libertad 180 Carloz Paz", 3, "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia" },
-                    { 12, "Av San Martin S/N Rio Cuarto", 1, "Programa de Mantenimiento y Actualización de Equipos" },
-                    { 13, "Colon 1050 Cordoba Capital", 2, "Modernización de la Refinería para Carmelo SA" }
+                    { 11, "Libertad 180 Carloz Paz", "Terminado", true, "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia" },
+                    { 12, "Av San Martin S/N Rio Cuarto", "Pendiente", true, "Programa de Mantenimiento y Actualización de Equipos" },
+                    { 13, "Colon 1050 Cordoba Capital", "Confirmado", true, "Modernización de la Refinería para Carmelo SA" }
                 });
 
             migrationBuilder.InsertData(
                 table: "services",
-                columns: new[] { "service_id", "description", "state", "value_hour" },
+                columns: new[] { "service_id", "description", "state", "is_active", "value_hour" },
                 values: new object[,]
                 {
-                    { 11, "Refinamiento de Petróleo Crudo", true, 150000.0 },
-                    { 12, "Desulfuración de Combustibles", true, 75000.0 },
-                    { 13, "Mantenimiento y Reparación de Equipos de Refinería", true, 90000.0 },
-                    { 14, "Consultoría en Eficiencia Energética y Ambiental", false, 90000.0 }
+                    { 11, "Refinamiento de Petróleo Crudo", true, true, 150000.0 },
+                    { 12, "Desulfuración de Combustibles", true, true, 75000.0 },
+                    { 13, "Mantenimiento y Reparación de Equipos de Refinería", true, true, 90000.0 },
+                    { 14, "Consultoría en Eficiencia Energética y Ambiental", false, true, 90000.0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "users",
-                columns: new[] { "user_id", "password", "dni", "name", "type" },
+                columns: new[] { "user_id", "password", "dni", "email", "is_active", "name", "type", "user_name" },
                 values: new object[,]
                 {
-                    { 11, "2aa98a180fa531837a47595f8128731e0364baab83703c0c19548afb7fce58ff", 2020200, "Marcio", 1 },
-                    { 12, "2f6337c78a507bc2f189a1e5540967991313d89f725a01273e72bd1558383706", 1010100, "Daniel", 1 },
-                    { 13, "4b4203459fbd2affada5f42ae06d85389c8759e4bb9f343104e150ff0b630ff2", 3030300, "Pepito", 2 }
+                    { 11, "0bafc68a2ce2898800fc9ce5d19d99b47a828cbb3453712fec676aa2dbc290e6", 2020200, "marcio@marcio.com", true, "Marcio", 1, "ProfeMarcio" },
+                    { 12, "ceea4b372a2f951d90f7ae0342989b9643978119756141db7af70a0c9b621c64", 1010100, "daniel@daniel.com", true, "Daniel", 1, "Danielazo" },
+                    { 13, "374600eb00b38ae69c41d6a1fb91dc2d0ddbacac5d3a165d0ff546549fe2078c", 3030300, "pepe@pepe.com", true, "Pepe", 2, "Pepito" }
                 });
 
             migrationBuilder.InsertData(
                 table: "works",
-                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
-                values: new object[] { 11, 120, 13, 11, 18000000.0, new DateTime(23, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 150000.0 });
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "is_active", "value_hour" },
+                values: new object[] { 11, 120, 13, 11, 18000000.0, new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 150000.0 });
 
             migrationBuilder.InsertData(
                 table: "works",
-                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
-                values: new object[] { 12, 50, 12, 11, 7500000.0, new DateTime(23, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 150000.0 });
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "is_active", "value_hour" },
+                values: new object[] { 12, 50, 12, 11, 7500000.0, new DateTime(2023, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 150000.0 });
 
             migrationBuilder.InsertData(
                 table: "works",
-                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "value_hour" },
-                values: new object[] { 13, 20, 12, 12, 1500000.0, new DateTime(23, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 75000.0 });
+                columns: new[] { "work_id", "count_hours", "project_id", "service_id", "cost", "date", "is_active", "value_hour" },
+                values: new object[] { 13, 20, 12, 12, 1500000.0, new DateTime(2023, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 75000.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_works_project_id",

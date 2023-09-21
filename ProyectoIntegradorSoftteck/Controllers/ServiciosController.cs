@@ -172,7 +172,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Elimina un servicio existente del sistema.
+        /// Elimina un servicio existente del sistema (borrado logico).
         /// </summary>
         /// <remarks>
         /// Esta acción permite a los administradores eliminar permanentemente un servicio del sistema. Se debe proporcionar el ID del servicio que se desea eliminar.
@@ -191,7 +191,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
             if (respuesta)
             {
-            return ResponseFactory.CreateSuccessResponse(404, "Servicio borrado con exito");
+            return ResponseFactory.CreateSuccessResponse(200, "Servicio borrado con exito  (borrado Logico  isActive=false)");
             }
          return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el servicio, consulte que exista el servicio que quiere borrar");
         }

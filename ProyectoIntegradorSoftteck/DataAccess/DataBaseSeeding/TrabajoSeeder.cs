@@ -20,7 +20,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
               new Trabajo
               {
                   CodTrabajo = 11,
-                  Fecha = new DateTime(23,5,1),
+                  Fecha = new DateTime(2023,5,1),
                   Cod_proyecto = 13,
                   Cod_servicio= 11,
                   CantHoras = 120,
@@ -30,7 +30,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                new Trabajo
                {
                    CodTrabajo = 12,
-                   Fecha = new DateTime(23, 7, 11),
+                   Fecha = new DateTime(2023, 7, 11),
                    Cod_proyecto = 12,
                    Cod_servicio = 11,
                    CantHoras = 50,
@@ -40,7 +40,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
                 new Trabajo
                 {
                     CodTrabajo = 13,
-                    Fecha = new DateTime(23, 7, 18),
+                    Fecha = new DateTime(2023, 7, 18),
                     Cod_proyecto = 12,
                     Cod_servicio = 12,
                     CantHoras = 20,

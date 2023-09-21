@@ -22,25 +22,31 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
               {
                   CodUsuario = 11,
                   Nombre = "Marcio",
+                  UserName="ProfeMarcio",
+                  Email="marcio@marcio.com",
                   Dni = 2020200,
                   Tipo = Tipo.Administrador,
-                  Contrasena = PasswordEncryptHelper.EncryptPassword("1234", "Marcio")
+                  Contrasena = PasswordEncryptHelper.EncryptPassword("1234", "marcio@marcio.com")
               },
                new Usuario
                {
                    CodUsuario = 12,
                    Nombre = "Daniel",
+                   UserName="Danielazo",
+                   Email="daniel@daniel.com",
                    Dni = 1010100,
                    Tipo = Tipo.Administrador,
-                   Contrasena = PasswordEncryptHelper.EncryptPassword("2020", "Daniel")
+                   Contrasena = PasswordEncryptHelper.EncryptPassword("2020", "daniel@daniel.com")
                },
                 new Usuario
                 {
                     CodUsuario = 13,
-                    Nombre = "Pepito",
+                    Nombre = "Pepe",
+                    UserName="Pepito",
+                    Email="pepe@pepe.com",
                     Dni = 3030300,
                     Tipo = Tipo.Consultor,
-                    Contrasena = PasswordEncryptHelper.EncryptPassword("0000", "Pepito")
+                    Contrasena = PasswordEncryptHelper.EncryptPassword("0000", "pepe@pepe.com")
                 });
         }
     }

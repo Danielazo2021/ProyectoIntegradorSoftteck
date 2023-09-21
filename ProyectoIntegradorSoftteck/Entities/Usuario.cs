@@ -22,6 +22,8 @@ namespace ProyectoIntegradorSoftteck.Entities
         {
             CodUsuario = id;
             Nombre = dto.Nombre;
+            UserName = dto.UserName;
+            Email = dto.Email;
             Dni = dto.Dni;
             Tipo = dto.Tipo;
             Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre);
@@ -36,7 +38,9 @@ namespace ProyectoIntegradorSoftteck.Entities
         public Usuario(UsuarioDto dto)
         {
             Nombre = dto.Nombre;
-            Dni= dto.Dni;
+            UserName = dto.UserName;
+            Email = dto.Email;
+            Dni = dto.Dni;
             Tipo = dto.Tipo;
             Contrasena = PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre);
 
@@ -59,6 +63,13 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Required]
         [Column("name")]
         public string Nombre { get; set; }
+        [Required]
+        [Column("user_name")]
+        public string UserName { get; set; }
+        [Required]
+
+        [Column("email")]
+        public string Email { get; set; }
 
         [Required]
         [Column("dni")]
@@ -71,6 +82,11 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Required]
         [Column("password")]
         public string Contrasena { get; set; }
+
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
 
     }
 }

@@ -5,8 +5,8 @@
     /// </summary>
     public enum Estado
     {
-         Pendiente =1,
-         Confirmado=2 ,
-         Terminado =3
+         Pendiente=1,
+         Confirmado=2,
+         Terminado=3
     }
 }

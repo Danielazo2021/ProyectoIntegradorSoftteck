@@ -60,6 +60,11 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Required]
         [Column("value_hour")]
         public double ValorHora { get; set; }
-       
+
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+
     }
 }

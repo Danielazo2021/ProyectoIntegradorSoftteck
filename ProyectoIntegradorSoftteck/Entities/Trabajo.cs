@@ -20,7 +20,7 @@ namespace ProyectoIntegradorSoftteck.Entities
             Fecha = dto.Fecha;
             CantHoras = dto.CantHoras;
             ValorHora = dto.ValorHora;
-            Costo = dto.Costo;
+            Costo = dto.CantHoras / dto.ValorHora;
             Cod_servicio = dto.Cod_servicio;
             Cod_proyecto = dto.Cod_proyecto;
         }
@@ -36,7 +36,7 @@ namespace ProyectoIntegradorSoftteck.Entities
             Fecha = dto.Fecha;
             CantHoras = dto.CantHoras;
             ValorHora = dto.ValorHora;
-            Costo = dto.Costo;
+            Costo = dto.CantHoras / dto.ValorHora;   // dto.Costo;
             Cod_servicio = dto.Cod_servicio;
             Cod_proyecto = dto.Cod_proyecto;
         }
@@ -71,7 +71,13 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Column("cost")]
         public double Costo { get; set; }
 
-       
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+
+
+
         [Required]
         [Column("project_id")]
         public int Cod_proyecto { get; set; }

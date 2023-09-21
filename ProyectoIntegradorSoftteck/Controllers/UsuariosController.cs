@@ -143,7 +143,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Elimina un usuario del sistema.
+        /// Elimina un usuario del sistema (borrado logico).
         /// </summary>
         /// <remarks>
         /// Esta acción permite a los administradores eliminar un usuario existente en el sistema.
@@ -162,7 +162,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
             if (respuesta)
             {
-                return ResponseFactory.CreateSuccessResponse(200, "Usuario borrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Usuario borrado con exito  (borrado Logico  isActive=false)");
             }
             return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el usuario, consulte que exista el usuario que quiere borrar");
         }

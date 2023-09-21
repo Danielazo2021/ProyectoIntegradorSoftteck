@@ -2,12 +2,10 @@
 using AlkemyUmsa.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Routing;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
 using ProyectoIntegradorSoftteck.Services.Interfaces;
-using System.Runtime.InteropServices;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,19 +59,19 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
 
-            /// <summary>
-            /// Obtiene un trabajo específico por su identificador.
-            /// </summary>
-            /// <remarks>
-            /// Esta acción permite a los consultores y administradores obtener los detalles de un trabajo registrado en el sistema mediante su identificador único.
-            /// </remarks>
-            /// <param name="id">El identificador único del trabajo que se desea obtener.</param>
-            /// <returns>
-            /// Una respuesta que contiene los detalles del trabajo o un mensaje de error si no se pudo encontrar el trabajo con el identificador proporcionado.
-            /// </returns>
-            /// <response code="200">Se devuelve cuando se obtienen los detalles del trabajo con éxito.</response>
-            /// <response code="404">Se devuelve cuando no se pudo encontrar el trabajo con el identificador proporcionado.</response>
-            [HttpGet("{id}")]
+        /// <summary>
+        /// Obtiene un trabajo específico por su identificador.
+        /// </summary>
+        /// <remarks>
+        /// Esta acción permite a los consultores y administradores obtener los detalles de un trabajo registrado en el sistema mediante su identificador único.
+        /// </remarks>
+        /// <param name="id">El identificador único del trabajo que se desea obtener.</param>
+        /// <returns>
+        /// Una respuesta que contiene los detalles del trabajo o un mensaje de error si no se pudo encontrar el trabajo con el identificador proporcionado.
+        /// </returns>
+        /// <response code="200">Se devuelve cuando se obtienen los detalles del trabajo con éxito.</response>
+        /// <response code="404">Se devuelve cuando no se pudo encontrar el trabajo con el identificador proporcionado.</response>
+        [HttpGet("{id}")]
         [Authorize(Policy = "ConsultorOAdministrador")]
         public async Task<IActionResult> ObtenerTrabajo(int id)
         {
@@ -141,7 +139,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Elimina un trabajo del sistema.
+        /// Elimina un trabajo del sistema (borrado logico).
         /// </summary>
         /// <remarks>
         /// Esta acción permite a los administradores eliminar un trabajo específico del sistema utilizando su ID único. Una vez eliminado, el trabajo no se podrá recuperar. Asegúrese de proporcionar el ID correcto del trabajo que desea eliminar.
@@ -160,7 +158,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
             if (respuesta)
             {
-                return ResponseFactory.CreateSuccessResponse(200, "Trabajo borrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Trabajo borrado con exito  (borrado Logico  isActive=false)");
             }
             return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el trabajo, consulte que exista el trabajo que quiere borrar");
         }

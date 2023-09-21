@@ -20,7 +20,7 @@ namespace ProyectoIntegradorSoftteck.Entities
             CodProyecto = id;
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            Estado = dto.Estado.ToString();
 
         }
 
@@ -32,7 +32,7 @@ namespace ProyectoIntegradorSoftteck.Entities
         {
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            Estado = dto.Estado.ToString();
                 
         }
         /// <summary>
@@ -55,12 +55,16 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Column("adress")]
         public string Direccion { get; set; }
 
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
         /// <summary>
         /// Estado del proyecto, puede ser "Pendiente," "Confirmado" o "Terminado."
         /// </summary>
         [Required]
         [Column("state")]
-        public Estado Estado { get; set; }
+        public string Estado { get; set; }
 
       
     }

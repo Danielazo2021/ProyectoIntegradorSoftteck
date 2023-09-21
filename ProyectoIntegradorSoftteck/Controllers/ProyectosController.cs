@@ -168,7 +168,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Elimina un proyecto existente de la aplicación.
+        /// Elimina un proyecto existente de la aplicación (borrado logico).
         /// </summary>
         /// <remarks>
         /// Esta acción permite a los administradores eliminar un proyecto existente en la aplicación mediante su identificador único.
@@ -187,7 +187,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
             if (respuesta)
             {
-                return ResponseFactory.CreateSuccessResponse(200, "Proyecto borrado con exito");
+                return ResponseFactory.CreateSuccessResponse(200, "Proyecto borrado con exito (borrado Logico  isActive=false)");
             }
             return ResponseFactory.CreateErrorResponse(404, "No se puede borrar el proyecto, consulte que exista el proyecto que quiere borrar");
         }

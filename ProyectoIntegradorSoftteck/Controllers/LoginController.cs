@@ -47,7 +47,8 @@ namespace ProyectoIntegradorSoftteck.Controllers
 
             var user = new UsuarioLoginDto()
             {
-               Nombre = dto.Nombre,
+               UserName = dto.UserName,
+               Email= dto.Email,
                 Token = token
             };
 
