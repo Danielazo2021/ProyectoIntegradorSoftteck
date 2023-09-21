@@ -115,28 +115,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
-        public async Task<List<Usuario>> ObtenerUsuariosPaginado(int pagina, int registrosPorPagina)
-        {
-            try
-            {
-                var query = _context.Usuarios.AsQueryable();
-
-                var usuarios = await query
-                    .OrderBy(p => p.CodUsuario)
-                    .Skip((pagina - 1) * registrosPorPagina)
-                    .Take(registrosPorPagina)
-                    .ToListAsync();
-
-                return usuarios;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        
-
+       
         public async Task<Usuario?> AuthenticateCredentials(AuthenticateDto dto)
         {
             return await _context.Usuarios.SingleOrDefaultAsync(x => x.Nombre == dto.Nombre && x.Contrasena == PasswordEncryptHelper.EncryptPassword(dto.Contrasena, dto.Nombre));

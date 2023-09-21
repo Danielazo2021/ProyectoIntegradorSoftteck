@@ -1,6 +1,8 @@
-﻿using AlkemyUmsa.Infrastructure;
+﻿using AlkemyUmsa.Helper;
+using AlkemyUmsa.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
@@ -24,70 +26,54 @@ namespace ProyectoIntegradorSoftteck.Controllers
         }
 
         /// <summary>
-        /// Obtiene una lista de todos los trabajos registrados en el sistema.
+        /// Obtiene una lista paginada de trabajos.
         /// </summary>
         /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista completa de todos los trabajos registrados en el sistema.
+        /// Este endpoint permite obtener una lista paginada de trabajos. Se requiere autorización como "ConsultorOAdministrador" para acceder a esta función.
         /// </remarks>
-        /// <returns>
-        /// Una respuesta que contiene la lista de trabajos o un mensaje de error si no se pudo obtener la lista.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando se obtiene la lista de trabajos con éxito.</response>
-        /// <response code="404">Se devuelve cuando no se pudo obtener la lista de trabajos.</response>
+        /// <param name="pag">Número de página para la paginación (opcional).</param>
+        /// <returns>Una respuesta HTTP con la lista paginada de trabajos.</returns>
+        /// <response code="200">Se ha obtenido la lista paginada de trabajos correctamente.</response>
+        /// <response code="401">No se ha autorizado el acceso a esta función.</response>
+        /// <response code="500">Se ha producido un error interno en el servidor.</response>
+        
         [HttpGet()]
         [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerTrabajos()
+        public async Task<IActionResult> ObtenerTrabajos(int? pag)
         {
-            var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajos();
-
-            if (respuesta != null)
+            try
             {
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+                var trabajos = await _unitOfWork.TrabajoRepository.ObtenerTrabajos();
+                int pageToShow = pag == null ? 1 : (int)pag;
+
+                if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+
+                var paginateTrabajos = PaginateHelper.Paginate(trabajos, pageToShow, url);
+
+                return ResponseFactory.CreateSuccessResponse(200, paginateTrabajos);
             }
-            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de trabajos");
-        }
-
-        /// <summary>
-        /// Obtiene una lista paginada de trabajos registrados en el sistema.
-        /// </summary>
-        /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista paginada de trabajos registrados en el sistema, según los parámetros proporcionados.
-        /// </remarks>
-        /// <param name="pagina">El número de página deseado.</param>
-        /// <param name="registrosPorPagina">El número de registros por página.</param>
-        /// <returns>
-        /// Una respuesta que contiene la lista paginada de trabajos o un mensaje de error si no se pudo obtener la lista.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando se obtiene la lista paginada de trabajos con éxito.</response>
-        /// <response code="404">Se devuelve cuando no se pudo obtener la lista paginada de trabajos.</response>
-        [HttpGet("{pagina}/{registrosPorPagina}")]
-        [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerTrabajosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
-        {
-            var respuesta = await _unitOfWork.TrabajoRepository.ObtenerTrabajosPaginado(pagina, registrosPorPagina);
-
-            if (respuesta != null)
+            catch (Exception ex)
             {
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+                return ResponseFactory.CreateErrorResponse(500, "Se ha producido un error interno en el servidor.", ex.Message);
             }
-            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de trabajos");
         }
 
 
-
-        /// <summary>
-        /// Obtiene un trabajo específico por su identificador.
-        /// </summary>
-        /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener los detalles de un trabajo registrado en el sistema mediante su identificador único.
-        /// </remarks>
-        /// <param name="id">El identificador único del trabajo que se desea obtener.</param>
-        /// <returns>
-        /// Una respuesta que contiene los detalles del trabajo o un mensaje de error si no se pudo encontrar el trabajo con el identificador proporcionado.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando se obtienen los detalles del trabajo con éxito.</response>
-        /// <response code="404">Se devuelve cuando no se pudo encontrar el trabajo con el identificador proporcionado.</response>
-        [HttpGet("{id}")]
+            /// <summary>
+            /// Obtiene un trabajo específico por su identificador.
+            /// </summary>
+            /// <remarks>
+            /// Esta acción permite a los consultores y administradores obtener los detalles de un trabajo registrado en el sistema mediante su identificador único.
+            /// </remarks>
+            /// <param name="id">El identificador único del trabajo que se desea obtener.</param>
+            /// <returns>
+            /// Una respuesta que contiene los detalles del trabajo o un mensaje de error si no se pudo encontrar el trabajo con el identificador proporcionado.
+            /// </returns>
+            /// <response code="200">Se devuelve cuando se obtienen los detalles del trabajo con éxito.</response>
+            /// <response code="404">Se devuelve cuando no se pudo encontrar el trabajo con el identificador proporcionado.</response>
+            [HttpGet("{id}")]
         [Authorize(Policy = "ConsultorOAdministrador")]
         public async Task<IActionResult> ObtenerTrabajo(int id)
         {

@@ -110,31 +110,7 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return listaTrabajos;
         }
 
-        public async Task<List<Trabajo>> ObtenerTrabajosPaginado(int pagina, int registrosPorPagina)
-        {
-            try
-            {
-                var query = _context.Trabajos
-                                    .Include(t => t.Proyecto)
-                                    .Include(t => t.Servicio)
-                                    .AsQueryable();
 
-                var trabajos = await query
-                    .OrderBy(p => p.CodTrabajo) 
-                    .Skip((pagina - 1) * registrosPorPagina) 
-                    .Take(registrosPorPagina) 
-                    .ToListAsync();
-
-              
-
-                return trabajos;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
 
     }
     

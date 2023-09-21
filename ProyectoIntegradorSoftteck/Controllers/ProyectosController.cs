@@ -1,4 +1,5 @@
-﻿using AlkemyUmsa.Infrastructure;
+﻿using AlkemyUmsa.Helper;
+using AlkemyUmsa.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoIntegradorSoftteck.DTOs;
@@ -22,58 +23,39 @@ namespace ProyectoIntegradorSoftteck.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Obtiene una lista de todos los proyectos disponibles en la aplicación.
-        /// </summary>
-        /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista completa de todos los proyectos registrados en la aplicación.
-        /// </remarks>
-        /// <returns>Una respuesta que contiene la lista de proyectos o un mensaje de error en caso de fallo.</returns>
-        /// <response code="200">Se devuelve cuando la solicitud se procesa correctamente. Incluye la lista de proyectos.</response>
-        /// <response code="400">Se devuelve cuando se produce un error durante la solicitud.</response>
-
-        [HttpGet()]
-        [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerProyectos()
-        {
-            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectos();
-
-            if (respuesta != null)
-            {
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
-
-            }
-            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
-
-        }
-
 
         /// <summary>
         /// Obtiene una lista paginada de proyectos.
         /// </summary>
         /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista paginada de proyectos registrados en la aplicación.
+        /// Este endpoint permite obtener una lista paginada de proyectos. Se requiere autorización como "ConsultorOAdministrador" para acceder a esta función.
         /// </remarks>
-        /// <param name="pagina">Número de página solicitada.</param>
-        /// <param name="registrosPorPagina">Cantidad de registros por página.</param>
-        /// <returns>
-        /// Una respuesta que contiene la lista paginada de proyectos o un mensaje de error en caso de fallo.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando la solicitud se procesa correctamente. Incluye la lista paginada de proyectos.</response>
-        /// <response code="400">Se devuelve cuando se produce un error durante la solicitud.</response>
-        [HttpGet("{pagina}/{registrosPorPagina}")]
+        /// <param name="pag">Número de página para la paginación (opcional).</param>
+        /// <returns>Una respuesta HTTP con la lista paginada de proyectos.</returns>
+        /// <response code="200">Se ha obtenido la lista paginada de proyectos correctamente.</response>
+        /// <response code="401">No se ha autorizado el acceso a esta función.</response>
+        /// <response code="500">Se ha producido un error interno en el servidor.</response>
+        [HttpGet()]
         [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerProyectosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
+        public async Task<IActionResult> ObtenerProyectos(int? pag)
         {
-            var respuesta = await _unitOfWork.ProyectoRepository.ObtenerProyectosPaginado(pagina, registrosPorPagina);
-
-            if (respuesta != null)
+            try
             {
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+                var proyectos = await _unitOfWork.ProyectoRepository.ObtenerProyectos();
+                int pageToShow = pag == null ? 1 : (int)pag;
 
+                if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+
+                var paginateProyectos = PaginateHelper.Paginate(proyectos, pageToShow, url);
+
+                return ResponseFactory.CreateSuccessResponse(200, paginateProyectos);
             }
-            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
-
+            catch (Exception ex)
+            {
+                return ResponseFactory.CreateErrorResponse(500, "Se ha producido un error interno en el servidor.", ex.Message);
+            }
         }
 
 
@@ -103,6 +85,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
             return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
 
         }
+
 
         /// <summary>
         /// Obtiene un proyecto por su identificador único.

@@ -1,6 +1,8 @@
-﻿using AlkemyUmsa.Infrastructure;
+﻿using AlkemyUmsa.Helper;
+using AlkemyUmsa.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using ProyectoIntegradorSoftteck.DTOs;
 using ProyectoIntegradorSoftteck.Entities;
@@ -23,58 +25,41 @@ namespace ProyectoIntegradorSoftteck.Controllers
            }
 
         /// <summary>
-        /// Obtiene una lista de todos los servicios disponibles en la aplicación.
+        /// Obtiene una lista paginada de proyectos.
         /// </summary>
         /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista de todos los servicios disponibles en la aplicación.
+        /// Este endpoint permite obtener una lista paginada de proyectos. Se requiere autorización como "ConsultorOAdministrador" para acceder a esta función.
         /// </remarks>
-        /// <returns>
-        /// Una respuesta que contiene una lista de servicios o un mensaje de error en caso de que no haya servicios disponibles.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando se obtiene la lista de servicios con éxito.</response>
-        /// <response code="404">Se devuelve cuando no se encuentran servicios disponibles o se produce un error en la consulta.</response>
+        /// <param name="pag">Número de página para la paginación (opcional).</param>
+        /// <returns>Una respuesta HTTP con la lista paginada de proyectos.</returns>
+        /// <response code="200">Se ha obtenido la lista paginada de proyectos correctamente.</response>
+        /// <response code="401">No se ha autorizado el acceso a esta función.</response>
+        /// <response code="500">Se ha producido un error interno en el servidor.</response>
+
         [HttpGet()]
         [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerServicios()
+        public async Task<IActionResult> ObtenerServicios(int? pag)
         {
-            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServicios();
-
-            if (respuesta != null)
-            {       
-            return ResponseFactory.CreateSuccessResponse(200, respuesta);
-            }           
-
-            return ResponseFactory.CreateErrorResponse(404,"Error al consultar lista de servicios");
-        
-        }
-
-        /// <summary>
-        /// Obtiene una lista paginada de servicios disponibles en la aplicación.
-        /// </summary>
-        /// <remarks>
-        /// Esta acción permite a los consultores y administradores obtener una lista paginada de servicios disponibles en la aplicación.
-        /// </remarks>
-        /// <param name="pagina">El número de página deseado.</param>
-        /// <param name="registrosPorPagina">La cantidad de registros por página.</param>
-        /// <returns>
-        /// Una respuesta que contiene una lista paginada de servicios o un mensaje de error en caso de que no haya servicios disponibles o se produzca un error en la consulta.
-        /// </returns>
-        /// <response code="200">Se devuelve cuando se obtiene la lista paginada de servicios con éxito.</response>
-        /// <response code="404">Se devuelve cuando no se encuentran servicios disponibles o se produce un error en la consulta.</response>
-        [HttpGet("{pagina}/{registrosPorPagina}")]
-        [Authorize(Policy = "ConsultorOAdministrador")]
-        public async Task<IActionResult> ObtenerServiciosPaginado([FromRoute] int pagina, [FromRoute] int registrosPorPagina)
-        {
-            var respuesta = await _unitOfWork.ServicioRepository.ObtenerServiciosPaginado(pagina, registrosPorPagina);
-
-            if (respuesta != null)
+            try
             {
-                return ResponseFactory.CreateSuccessResponse(200, respuesta);
+                var servicios = await _unitOfWork.ServicioRepository.ObtenerServicios();
+                int pageToShow = pag == null ? 1 : (int)pag;
+
+                if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+
+                var paginateServicios = PaginateHelper.Paginate(servicios, pageToShow, url);
+
+                return ResponseFactory.CreateSuccessResponse(200, paginateServicios);
             }
-
-            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de servicios");
-
+            catch (Exception ex)
+            {                
+                return ResponseFactory.CreateErrorResponse(500, "Se ha producido un error interno en el servidor.", ex.Message);
+            }
         }
+
+       
 
 
         /// <summary>
