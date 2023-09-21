@@ -4,10 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoIntegradorSoftteck.Entities
 {
+    /// <summary>
+    /// Clase que representa un servicio en la aplicación.
+    /// </summary>
     [Table("services")]
     public class Servicio
     {
-
+        /// <summary>
+        /// Constructor de la clase con parámetros.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del servicio.</param>
+        /// <param name="id">Identificador único del servicio.</param>
         public Servicio(ServicioDto dto, int id)
         {
             CodServicio = id;
@@ -16,6 +23,11 @@ namespace ProyectoIntegradorSoftteck.Entities
             ValorHora = dto.ValorHora;
 
         }
+
+        /// <summary>
+        /// Constructor de la clase con parámetros.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del servicio.</param>
         public Servicio(ServicioDto dto)
         {
             Descr= dto.Descr;
@@ -24,6 +36,9 @@ namespace ProyectoIntegradorSoftteck.Entities
             
         }
 
+        /// <summary>
+        /// Constructor vacío de la clase.
+        /// </summary>
         public Servicio()
         {
             
@@ -45,6 +60,11 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Required]
         [Column("value_hour")]
         public double ValorHora { get; set; }
-       
+
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+
     }
 }

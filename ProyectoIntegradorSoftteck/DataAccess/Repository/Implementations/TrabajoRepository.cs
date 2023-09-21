@@ -12,26 +12,42 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
-        public async Task<bool> BorrarTrabajo(int cod)
+        public async Task<List<Trabajo>> ObtenerTrabajos()
         {
+            List<Trabajo> listaTrabajos = new List<Trabajo>();
             try
             {
-                var trabajo = await _context.Trabajos.FirstOrDefaultAsync(u => u.CodTrabajo == cod);
-                if (trabajo != null)
-                {
-                    _context.Trabajos.Remove(trabajo);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                listaTrabajos = await _context.Trabajos
+                    .Include(t => t.Proyecto)
+                    .Include(t => t.Servicio)
+                    .ToListAsync();
             }
             catch (Exception)
             {
-                return false;
             }
+
+            return listaTrabajos;
+        }
+
+        public async Task<Trabajo> ObtenerTrabajoPorId(int cod)
+        {
+            try
+            {
+                var trabajo = await _context.Trabajos
+                            .Include(t => t.Proyecto)
+                            .Include(t => t.Servicio)
+                            .FirstOrDefaultAsync(trabajo => trabajo.CodTrabajo == cod);
+                if (trabajo != null)
+                {
+                    return trabajo;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
         }
 
         public async Task<bool> InsertarTrabajo(TrabajoDto trabajoDto)
@@ -74,68 +90,29 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return true;
         }
 
-        public async Task<Trabajo> ObtenerTrabajoPorId(int cod)
+        public async Task<bool> BorrarTrabajo(int cod)
         {
             try
             {
-                var trabajo = await _context.Trabajos.FirstOrDefaultAsync(trabajo => trabajo.CodTrabajo == cod);
+                var trabajo = await _context.Trabajos.FirstOrDefaultAsync(u => u.CodTrabajo == cod);
                 if (trabajo != null)
                 {
-                    return trabajo;
+                    trabajo.IsActive = false;
+                    _context.Trabajos.Update(trabajo);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
-            catch (Exception ex)
-            {
-
-            }
-
-            return null;
-        }
-
-      
-        public async Task<List<Trabajo>> ObtenerTrabajos()
-        {
-            List<Trabajo> listaTrabajos = new List<Trabajo>();
-            try
-            {
-                listaTrabajos = await _context.Trabajos
-                    .Include(t => t.Proyecto)
-                    .Include(t => t.Servicio)
-                    .ToListAsync();
-            }
             catch (Exception)
             {
-            }
-
-            return listaTrabajos;
-        }
-
-        public async Task<List<Trabajo>> ObtenerTrabajosPaginado(int pagina, int registrosPorPagina)
-        {
-            try
-            {
-                var query = _context.Trabajos
-                                    .Include(t => t.Proyecto)
-                                    .Include(t => t.Servicio)
-                                    .AsQueryable();
-
-                var trabajos = await query
-                    .OrderBy(p => p.CodTrabajo) 
-                    .Skip((pagina - 1) * registrosPorPagina) 
-                    .Take(registrosPorPagina) 
-                    .ToListAsync();
-
-              
-
-                return trabajos;
-            }
-            catch (Exception)
-            {
-
-                throw;
+                return false;
             }
         }
 
     }
-    
+
 }

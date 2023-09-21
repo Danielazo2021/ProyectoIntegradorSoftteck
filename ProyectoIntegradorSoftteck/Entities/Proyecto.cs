@@ -4,25 +4,40 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoIntegradorSoftteck.Entities
 {
+    /// <summary>
+    /// Clase que representa un proyecto en la aplicación.
+    /// </summary>
     [Table("projects")]
     public class Proyecto
     {
+        /// <summary>
+        /// Constructor de la clase con parámetros.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del proyecto.</param>
+        /// <param name="id">Identificador único del proyecto.</param>
         public Proyecto(ProyectoDto dto, int id)
         {
             CodProyecto = id;
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            Estado = dto.Estado.ToString();
 
         }
 
+        /// <summary>
+        /// Constructor de la clase con parámetros.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del proyecto.</param>
         public Proyecto(ProyectoDto dto)
         {
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            Estado = dto.Estado.ToString();
                 
         }
+        /// <summary>
+        /// Constructor vacío de la clase.
+        /// </summary>
         public Proyecto()
         {
                 
@@ -41,8 +56,15 @@ namespace ProyectoIntegradorSoftteck.Entities
         public string Direccion { get; set; }
 
         [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+        /// <summary>
+        /// Estado del proyecto, puede ser "Pendiente," "Confirmado" o "Terminado."
+        /// </summary>
+        [Required]
         [Column("state")]
-        public Estado Estado { get; set; }
+        public string Estado { get; set; }
 
       
     }

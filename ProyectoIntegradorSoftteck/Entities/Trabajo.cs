@@ -5,31 +5,46 @@ using System.Text.RegularExpressions;
 
 namespace ProyectoIntegradorSoftteck.Entities
 {
-    
+    /// <summary>
+    /// Clase que representa un trabajo en la aplicación.
+    /// </summary>
     [Table("works")]
     public class Trabajo
     {
-
+        /// <summary>
+        /// Constructor para crear un objeto Trabajo a partir de un objeto TrabajoDto.
+        /// </summary>
+        /// <param name="dto">Objeto TrabajoDto con los datos del trabajo.</param>
         public Trabajo(TrabajoDto dto)
         {
             Fecha = dto.Fecha;
             CantHoras = dto.CantHoras;
             ValorHora = dto.ValorHora;
-            Costo = dto.Costo;
+            Costo = dto.CantHoras / dto.ValorHora;
             Cod_servicio = dto.Cod_servicio;
             Cod_proyecto = dto.Cod_proyecto;
         }
-      
+
+        /// <summary>
+        /// Constructor para crear un objeto Trabajo a partir de un objeto TrabajoDto y un ID específico.
+        /// </summary>
+        /// <param name="dto">Objeto TrabajoDto con los datos del trabajo.</param>
+        /// <param name="id">ID único del trabajo.</param>
         public Trabajo(TrabajoDto dto, int id)
         {
             CodTrabajo = id;
             Fecha = dto.Fecha;
             CantHoras = dto.CantHoras;
             ValorHora = dto.ValorHora;
-            Costo = dto.Costo;
+            Costo = dto.CantHoras / dto.ValorHora;   // dto.Costo;
             Cod_servicio = dto.Cod_servicio;
             Cod_proyecto = dto.Cod_proyecto;
         }
+
+
+        /// <summary>
+        /// Constructor sin argumentos requerido para Entity Framework.
+        /// </summary>
         public Trabajo()
         {
                 
@@ -56,7 +71,13 @@ namespace ProyectoIntegradorSoftteck.Entities
         [Column("cost")]
         public double Costo { get; set; }
 
-       
+        [Required]
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+
+
+
         [Required]
         [Column("project_id")]
         public int Cod_proyecto { get; set; }

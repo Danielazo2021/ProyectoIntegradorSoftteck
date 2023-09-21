@@ -5,6 +5,9 @@ using ProyectoIntegradorSoftteck.Services.Interfaces;
 
 namespace ProyectoIntegradorSoftteck.Services.Implementaciones
 {
+    /// <summary>
+    /// Implementación de la interfaz IUnitOfWork que proporciona acceso a los repositorios de entidades de la base de datos.
+    /// </summary>
     public class UnitOfWorkService : IUnitOfWork
     {
         private readonly ContextDB _context;
@@ -13,8 +16,11 @@ namespace ProyectoIntegradorSoftteck.Services.Implementaciones
         public TrabajoRepository TrabajoRepository { get; private set; }
         public ProyectoRepository ProyectoRepository { get; private set; }
 
-        
 
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase UnitOfWorkService con el contexto de base de datos proporcionado.
+        /// </summary>
+        /// <param name="context">El contexto de base de datos.</param>
         public UnitOfWorkService(ContextDB context)
         {
             _context = context;

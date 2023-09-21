@@ -12,8 +12,8 @@ using ProyectoIntegradorSoftteck.DataAccess;
 namespace ProyectoIntegradorSoftteck.Migrations
 {
     [DbContext(typeof(ContextDB))]
-    [Migration("20230917232544_MI_MigracionDaniel")]
-    partial class MI_MigracionDaniel
+    [Migration("20230921160625_MI_MigracionDaniel20")]
+    partial class MI_MigracionDaniel20
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,9 +38,14 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("adress");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int")
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("state");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_active");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -56,21 +61,24 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         {
                             CodProyecto = 11,
                             Direccion = "Libertad 180 Carloz Paz",
-                            Estado = 3,
+                            Estado = "Terminado",
+                            IsActive = true,
                             Nombre = "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia"
                         },
                         new
                         {
                             CodProyecto = 12,
                             Direccion = "Av San Martin S/N Rio Cuarto",
-                            Estado = 1,
+                            Estado = "Pendiente",
+                            IsActive = true,
                             Nombre = "Programa de Mantenimiento y Actualización de Equipos"
                         },
                         new
                         {
                             CodProyecto = 13,
                             Direccion = "Colon 1050 Cordoba Capital",
-                            Estado = 2,
+                            Estado = "Confirmado",
+                            IsActive = true,
                             Nombre = "Modernización de la Refinería para Carmelo SA"
                         });
                 });
@@ -93,6 +101,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("state");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_active");
+
                     b.Property<double>("ValorHora")
                         .HasColumnType("float")
                         .HasColumnName("value_hour");
@@ -107,6 +119,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CodServicio = 11,
                             Descr = "Refinamiento de Petróleo Crudo",
                             Estado = true,
+                            IsActive = true,
                             ValorHora = 150000.0
                         },
                         new
@@ -114,6 +127,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CodServicio = 12,
                             Descr = "Desulfuración de Combustibles",
                             Estado = true,
+                            IsActive = true,
                             ValorHora = 75000.0
                         },
                         new
@@ -121,6 +135,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CodServicio = 13,
                             Descr = "Mantenimiento y Reparación de Equipos de Refinería",
                             Estado = true,
+                            IsActive = true,
                             ValorHora = 90000.0
                         },
                         new
@@ -128,6 +143,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             CodServicio = 14,
                             Descr = "Consultoría en Eficiencia Energética y Ambiental",
                             Estado = false,
+                            IsActive = true,
                             ValorHora = 90000.0
                         });
                 });
@@ -161,6 +177,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("date");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_active");
+
                     b.Property<double>("ValorHora")
                         .HasColumnType("float")
                         .HasColumnName("value_hour");
@@ -181,7 +201,8 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             Cod_proyecto = 13,
                             Cod_servicio = 11,
                             Costo = 18000000.0,
-                            Fecha = new DateTime(23, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fecha = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
                             ValorHora = 150000.0
                         },
                         new
@@ -191,7 +212,8 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             Cod_proyecto = 12,
                             Cod_servicio = 11,
                             Costo = 7500000.0,
-                            Fecha = new DateTime(23, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fecha = new DateTime(2023, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
                             ValorHora = 150000.0
                         },
                         new
@@ -201,7 +223,8 @@ namespace ProyectoIntegradorSoftteck.Migrations
                             Cod_proyecto = 12,
                             Cod_servicio = 12,
                             Costo = 1500000.0,
-                            Fecha = new DateTime(23, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fecha = new DateTime(2023, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
                             ValorHora = 75000.0
                         });
                 });
@@ -224,6 +247,15 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("int")
                         .HasColumnName("dni");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("email");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_active");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -233,6 +265,11 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         .HasColumnType("int")
                         .HasColumnName("type");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("user_name");
+
                     b.HasKey("CodUsuario");
 
                     b.ToTable("users");
@@ -241,26 +278,35 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         new
                         {
                             CodUsuario = 11,
-                            Contrasena = "2aa98a180fa531837a47595f8128731e0364baab83703c0c19548afb7fce58ff",
+                            Contrasena = "0bafc68a2ce2898800fc9ce5d19d99b47a828cbb3453712fec676aa2dbc290e6",
                             Dni = 2020200,
+                            Email = "marcio@marcio.com",
+                            IsActive = true,
                             Nombre = "Marcio",
-                            Tipo = 1
+                            Tipo = 1,
+                            UserName = "ProfeMarcio"
                         },
                         new
                         {
                             CodUsuario = 12,
-                            Contrasena = "2f6337c78a507bc2f189a1e5540967991313d89f725a01273e72bd1558383706",
+                            Contrasena = "ceea4b372a2f951d90f7ae0342989b9643978119756141db7af70a0c9b621c64",
                             Dni = 1010100,
+                            Email = "daniel@daniel.com",
+                            IsActive = true,
                             Nombre = "Daniel",
-                            Tipo = 1
+                            Tipo = 1,
+                            UserName = "Danielazo"
                         },
                         new
                         {
                             CodUsuario = 13,
-                            Contrasena = "4b4203459fbd2affada5f42ae06d85389c8759e4bb9f343104e150ff0b630ff2",
+                            Contrasena = "374600eb00b38ae69c41d6a1fb91dc2d0ddbacac5d3a165d0ff546549fe2078c",
                             Dni = 3030300,
-                            Nombre = "Pepito",
-                            Tipo = 2
+                            Email = "pepe@pepe.com",
+                            IsActive = true,
+                            Nombre = "Pepe",
+                            Tipo = 2,
+                            UserName = "Pepito"
                         });
                 });
 
