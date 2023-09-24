@@ -1,0 +1,1696 @@
+{
+	"info": {
+		"_postman_id": "e8bb528d-7cec-40b8-b2dc-7de32982ad97",
+		"name": "Presentacion_Softeck",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23762685"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "PostLogin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//Pepe rol Administrador\r\n{\r\n  \"userName\": \"Danielazo\",\r\n  \"email\": \"daniel@daniel.com\",\r\n  \"contrasenia\": \"2020\"\r\n}\r\n\r\n//Pepe rol Consultor\r\n/*\r\n{\r\n  \"userName\": \"Pepito\",\r\n  \"email\": \"pepe@pepe.com\",\r\n  \"contrasenia\": \"0000\"\r\n}\r\n*/\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7052/api/Login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7052",
+							"path": [
+								"api",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proyectos",
+			"item": [
+				{
+					"name": "Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetByEstado",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/por_estado?estado=2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										"por_estado"
+									],
+									"query": [
+										{
+											"key": "estado",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Otro Mega Proyecto de remodelacion\",\r\n  \"direccion\": \"Santa Fe 1350\",\r\n  \"estado\": 1\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Gran remodelacion planta principal\",\r\n  \"direccion\": \"Colon 120\",\r\n  \"estado\": 1\r\n  \r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenConsultor}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Administrador",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetByEstado",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/por_estado?estado=3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										"por_estado"
+									],
+									"query": [
+										{
+											"key": "estado",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Mega Proyecto de remodelacion\",\r\n  \"direccion\": \"Santa Fe 1350\",\r\n  \"estado\": 1\r\n  \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"Gran remodelacion planta principal\",\r\n  \"direccion\": \"Colon 120\",\r\n  \"estado\": 1\r\n  \r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Proyectos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Proyectos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenAdmin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Trabajos",
+			"item": [
+				{
+					"name": "Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"fecha\": \"2023-09-21T15:13:57.080Z\",\r\n  \"cantHoras\": 20,\r\n  \"valorHora\": 1000,\r\n  \"cod_proyecto\": 3,\r\n  \"cod_servicio\": 2\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fecha\": \"2023-09-21T15:13:57.080Z\",\r\n    \"cantHoras\": 0,\r\n    \"valorHora\": 0,\r\n    \"cod_proyecto\": 0,\r\n    \"cod_servicio\": 0\r\n    \r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenConsultor}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Administrador",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"fecha\": \"2023-09-21T15:13:57.080Z\",\r\n  \"cantHoras\": 20,\r\n  \"valorHora\": 1000,\r\n  \"cod_proyecto\": 3,\r\n  \"cod_servicio\": 2\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"fecha\": \"2023-09-21T15:13:57.080Z\",\r\n  \"cantHoras\": 20,\r\n  \"valorHora\": 1000,\r\n  \"cod_proyecto\": 3,\r\n  \"cod_servicio\": 2\r\n\r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Trabajos/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Trabajos",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenAdmin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"DanielOk\",\r\n  \"dni\": 1010100,\r\n  \"tipo\": 1,\r\n  \"contrasena\": \"0000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"nombre\": \"string\",\r\n  \"dni\": 0,\r\n  \"tipo\": 1,\r\n  \"contrasena\": \"string\"\r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenConsultor}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Administrador",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Nombre\":\"DANIEL3\",\r\n  \"UserName\": \"DanielOk\",\r\n  \"Email\": \"wily@daniel.com\",\r\n  \"dni\": 1010100,\r\n  \"tipo\": 1,\r\n  \"contrasena\": \"0000\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Nombre\":\"Pepe-Jose\",\r\n  \"UserName\": \"Pepito\",\r\n  \"Email\": \"pepe@pepe.com\",\r\n  \"dni\": 999999,\r\n  \"tipo\": 3,\r\n  \"contrasena\": \"0000\"\r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Usuarios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Usuarios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenAdmin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Servicios",
+			"item": [
+				{
+					"name": "Consultor",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Nuevo Servicio de asesoria\",\r\n  \"estado\": true,\r\n  \"valorHora\": 15000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Refineria premiun\",\r\n  \"estado\": true,\r\n  \"valorHora\": 40000\r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenConsultor}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Administrador",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios?pag=1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios"
+									],
+									"query": [
+										{
+											"key": "pag",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostNuevo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Servicio de asesoria sobre Destilados\",\r\n  \"estado\": true,\r\n  \"valorHora\": 50000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"descr\": \"Refineria premiun\",\r\n  \"estado\": true,\r\n  \"valorHora\": 40000\r\n}\r\n\r\n//tambien hay que mandar el id por el path en Params",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7052/api/Servicios/:id",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7052",
+									"path": [
+										"api",
+										"Servicios",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{TokenAdmin}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWFyY2lvIiwiZXhwIjoxNjk1MjY4ODM2fQ.Qy9hQnxo34XnbPkpwdy-rZmanZuuY2KzQHMDK1XPh3c",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TokenAdmin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiRGFuaWVsIiwiZXhwIjoxNjk1NTMzNTEyfQ.ulluB5dbtbYqDdy9_KJALU7-5plPGl6Sgo4XNZq1owI",
+			"type": "string"
+		},
+		{
+			"key": "TokenConsultor",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ3ZWJBcGlTdWJqZWN0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxMyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNvbnN1bHRvciIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJQZXBlIiwiZXhwIjoxNjk1NTMzNTk4fQ.SG_aW0sKudi1Rxe5bLwPWmYgAg4ssWLD4ylwW4iZsUE",
+			"type": "string"
+		}
+	]
+}
