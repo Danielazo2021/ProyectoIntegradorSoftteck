@@ -12,8 +12,8 @@ using ProyectoIntegradorSoftteck.DataAccess;
 namespace ProyectoIntegradorSoftteck.Migrations
 {
     [DbContext(typeof(ContextDB))]
-    [Migration("20230921160625_MI_MigracionDaniel20")]
-    partial class MI_MigracionDaniel20
+    [Migration("20230924044032_MI_MigracionDaniel")]
+    partial class MI_MigracionDaniel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     b.HasData(
                         new
                         {
-                            CodProyecto = 11,
+                            CodProyecto = 1,
                             Direccion = "Libertad 180 Carloz Paz",
                             Estado = "Terminado",
                             IsActive = true,
@@ -67,7 +67,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodProyecto = 12,
+                            CodProyecto = 2,
                             Direccion = "Av San Martin S/N Rio Cuarto",
                             Estado = "Pendiente",
                             IsActive = true,
@@ -75,7 +75,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodProyecto = 13,
+                            CodProyecto = 3,
                             Direccion = "Colon 1050 Cordoba Capital",
                             Estado = "Confirmado",
                             IsActive = true,
@@ -116,7 +116,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     b.HasData(
                         new
                         {
-                            CodServicio = 11,
+                            CodServicio = 1,
                             Descr = "Refinamiento de Petróleo Crudo",
                             Estado = true,
                             IsActive = true,
@@ -124,7 +124,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodServicio = 12,
+                            CodServicio = 2,
                             Descr = "Desulfuración de Combustibles",
                             Estado = true,
                             IsActive = true,
@@ -132,7 +132,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodServicio = 13,
+                            CodServicio = 3,
                             Descr = "Mantenimiento y Reparación de Equipos de Refinería",
                             Estado = true,
                             IsActive = true,
@@ -140,7 +140,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodServicio = 14,
+                            CodServicio = 4,
                             Descr = "Consultoría en Eficiencia Energética y Ambiental",
                             Estado = false,
                             IsActive = true,
@@ -196,10 +196,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     b.HasData(
                         new
                         {
-                            CodTrabajo = 11,
+                            CodTrabajo = 1,
                             CantHoras = 120,
-                            Cod_proyecto = 13,
-                            Cod_servicio = 11,
+                            Cod_proyecto = 3,
+                            Cod_servicio = 1,
                             Costo = 18000000.0,
                             Fecha = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -207,10 +207,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodTrabajo = 12,
+                            CodTrabajo = 2,
                             CantHoras = 50,
-                            Cod_proyecto = 12,
-                            Cod_servicio = 11,
+                            Cod_proyecto = 2,
+                            Cod_servicio = 1,
                             Costo = 7500000.0,
                             Fecha = new DateTime(2023, 7, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -218,10 +218,10 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodTrabajo = 13,
+                            CodTrabajo = 3,
                             CantHoras = 20,
-                            Cod_proyecto = 12,
-                            Cod_servicio = 12,
+                            Cod_proyecto = 2,
+                            Cod_servicio = 2,
                             Costo = 1500000.0,
                             Fecha = new DateTime(2023, 7, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
@@ -277,7 +277,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                     b.HasData(
                         new
                         {
-                            CodUsuario = 11,
+                            CodUsuario = 1,
                             Contrasena = "0bafc68a2ce2898800fc9ce5d19d99b47a828cbb3453712fec676aa2dbc290e6",
                             Dni = 2020200,
                             Email = "marcio@marcio.com",
@@ -288,7 +288,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodUsuario = 12,
+                            CodUsuario = 2,
                             Contrasena = "ceea4b372a2f951d90f7ae0342989b9643978119756141db7af70a0c9b621c64",
                             Dni = 1010100,
                             Email = "daniel@daniel.com",
@@ -299,7 +299,7 @@ namespace ProyectoIntegradorSoftteck.Migrations
                         },
                         new
                         {
-                            CodUsuario = 13,
+                            CodUsuario = 3,
                             Contrasena = "374600eb00b38ae69c41d6a1fb91dc2d0ddbacac5d3a165d0ff546549fe2078c",
                             Dni = 3030300,
                             Email = "pepe@pepe.com",

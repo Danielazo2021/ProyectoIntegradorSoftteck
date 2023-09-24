@@ -124,7 +124,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         /// <returns>
         /// Una respuesta que indica si el proyecto se registró exitosamente o un mensaje de error en caso de fallo.
         /// </returns>
-        /// <response code="200">Se devuelve cuando el proyecto se registra con éxito en la aplicación.</response>
+        /// <response code="201">Se devuelve cuando el proyecto se registra con éxito en la aplicación.</response>
         /// <response code="404">Se devuelve cuando se produce un error durante el registro del proyecto.</response>
         [HttpPost]
         [Authorize(Policy = "Administrador")]
@@ -134,7 +134,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
             var respuesta = await _unitOfWork.ProyectoRepository.InsertarProyecto(proyecto);
             if (respuesta)
             {
-                return ResponseFactory.CreateSuccessResponse(200, "Proyecto registrado con exito");
+                return ResponseFactory.CreateSuccessResponse(201, "Proyecto registrado con exito");
                 
             }
             return ResponseFactory.CreateErrorResponse(404, "Error al ingresar el proyecto");
