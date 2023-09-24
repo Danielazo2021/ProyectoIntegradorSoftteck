@@ -33,6 +33,16 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
+
+        /// <summary>
+        /// Obtiene un usuario por su identificador único (código).
+        /// </summary>
+        /// <param name="cod">El código único del usuario que se desea obtener.</param>
+        /// <returns>
+        ///   <para>Una tarea que representa la operación asincrónica y devuelve un objeto de tipo Usuario.</para>
+        ///   <para>El objeto representa el usuario obtenido por su código único.</para>
+        ///   <para>Si no se encuentra ningún usuario con el código proporcionado o si ocurre una excepción durante la operación, se devuelve null.</para>
+        /// </returns>
         public async Task<Usuario> ObtenerUsuarioPorId(int cod) 
         {
             try
@@ -51,6 +61,15 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
             return null; 
         }
 
+        /// <summary>
+        /// Inserta un nuevo usuario en la fuente de datos.
+        /// </summary>
+        /// <param name="usuarioDto">Un objeto de tipo UsuarioDto que contiene los datos del usuario a insertar.</param>
+        /// <returns>
+        ///   <para>Una tarea que representa la operación asincrónica y devuelve un valor booleano.</para>
+        ///   <para>Devuelve true si el usuario se inserta con éxito en la fuente de datos.</para>
+        ///   <para>Devuelve false si ocurre una excepción durante la operación o si la inserción falla.</para>
+        /// </returns>
         public async Task<bool> InsertarUsuario(UsuarioDto usuarioDto)
         {
             bool respuesta;
@@ -72,6 +91,17 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
+
+
+        /// <summary>
+        /// Modifica un usuario existente en la fuente de datos.
+        /// </summary>
+        /// <param name="usuarioModificado">Un objeto de tipo Usuario que contiene los datos actualizados del usuario.</param>
+        /// <returns>
+        ///   <para>Una tarea que representa la operación asincrónica y devuelve un valor booleano.</para>
+        ///   <para>Devuelve true si el usuario se modifica con éxito en la fuente de datos.</para>
+        ///   <para>Devuelve false si el usuario original no se encuentra en la fuente de datos o si ocurre una excepción durante la operación.</para>
+        /// </returns>
         public async Task<bool> ModificarUsuario(Usuario usuarioModificado)
         {
             var user = await _context.Usuarios.FirstOrDefaultAsync(x => x.CodUsuario == usuarioModificado.CodUsuario);
@@ -90,6 +120,16 @@ namespace ProyectoIntegradorSoftteck.DataAccess.Repository.Implementations
 
         }
 
+
+        /// <summary>
+        /// Marca un usuario como inactivo en la fuente de datos.
+        /// </summary>
+        /// <param name="cod">El código único del usuario que se desea marcar como inactivo.</param>
+        /// <returns>
+        ///   <para>Una tarea que representa la operación asincrónica y devuelve un valor booleano.</para>
+        ///   <para>Devuelve true si el usuario se marca como inactivo con éxito en la fuente de datos.</para>
+        ///   <para>Devuelve false si el usuario no se encuentra en la fuente de datos, ya está inactivo o si ocurre una excepción durante la operación.</para>
+        /// </returns>
         public async Task<bool> BorrarUsuario(int cod)
         {
             try

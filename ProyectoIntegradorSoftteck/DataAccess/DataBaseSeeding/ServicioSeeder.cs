@@ -19,28 +19,28 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
             modelBuilder.Entity<Servicio>().HasData(
                  new Servicio
                  {
-                     CodServicio = 11,
+                     CodServicio = 1,
                      Descr = "Refinamiento de Petróleo Crudo",
                      Estado = true,
                      ValorHora = 150000
                  },
                  new Servicio
                  {
-                     CodServicio = 12,
+                     CodServicio = 2,
                      Descr = "Desulfuración de Combustibles",
                      Estado = true,
                      ValorHora = 75000
                  },
                  new Servicio
                  {
-                     CodServicio = 13,
+                     CodServicio = 3,
                      Descr = "Mantenimiento y Reparación de Equipos de Refinería",
                      Estado = true,
                      ValorHora = 90000
                  },
                    new Servicio
                    {
-                       CodServicio = 14,
+                       CodServicio = 4,
                        Descr = "Consultoría en Eficiencia Energética y Ambiental",
                        Estado = false,
                        ValorHora = 90000

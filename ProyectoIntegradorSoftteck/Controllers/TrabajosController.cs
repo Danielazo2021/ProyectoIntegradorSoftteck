@@ -95,7 +95,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         /// <returns>
         /// Una respuesta que indica si el trabajo se registró con éxito o si hubo un error en el proceso.
         /// </returns>
-        /// <response code="200">Se devuelve cuando el trabajo se registra con éxito en el sistema.</response>
+        /// <response code="201">Se devuelve cuando el trabajo se registra con éxito en el sistema.</response>
         /// <response code="404">Se devuelve cuando se produce un error al intentar registrar el trabajo.</response>
         [HttpPost]
         [Authorize(Policy = "Administrador")]
@@ -105,7 +105,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
             var respuesta = await _unitOfWork.TrabajoRepository.InsertarTrabajo(trabajoDto);
             if (respuesta)
             {
-                return ResponseFactory.CreateSuccessResponse(200, "Trabajo registrado con exito");
+                return ResponseFactory.CreateSuccessResponse(201, "Trabajo registrado con exito");
             }
             return ResponseFactory.CreateErrorResponse(404, "Error al ingresar el trabajo");
         }

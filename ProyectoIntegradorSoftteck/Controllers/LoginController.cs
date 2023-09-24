@@ -11,7 +11,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   
     public class LoginController : ControllerBase
     {
         private TokenJwtHelper _tokenJwtHelper;
@@ -21,6 +21,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
             _unitOfWork = unitOfWork;
             _tokenJwtHelper = new TokenJwtHelper(configuration);
         }
+
 
         /// <summary>
         /// Punto de ingreso para el Login de la aplicación.
@@ -32,8 +33,9 @@ namespace ProyectoIntegradorSoftteck.Controllers
         /// <returns>Devuelve el usuario con el Token JWT si la autenticación es exitosa o un mensaje de error si las credenciales son incorrectas.</returns>
         /// <response code="200">Se devuelve cuando la autenticación es exitosa. Incluye el usuario autenticado y el Token JWT.</response>
         /// <response code="401">Se devuelve cuando las credenciales son incorrectas o la autenticación falla.</response>
-        [HttpPost]
-        [AllowAnonymous]
+
+
+        [HttpPost]     
     
         public async Task<IActionResult> Login(AuthenticateDto dto)
         {

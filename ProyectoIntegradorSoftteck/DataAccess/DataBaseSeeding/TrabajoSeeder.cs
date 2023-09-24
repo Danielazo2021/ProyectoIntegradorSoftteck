@@ -19,30 +19,30 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
             modelBuilder.Entity<Trabajo>().HasData(
               new Trabajo
               {
-                  CodTrabajo = 11,
+                  CodTrabajo = 1,
                   Fecha = new DateTime(2023,5,1),
-                  Cod_proyecto = 13,
-                  Cod_servicio= 11,
+                  Cod_proyecto = 3,
+                  Cod_servicio= 1,
                   CantHoras = 120,
                   ValorHora= 150000,
                   Costo=18000000
               },
                new Trabajo
                {
-                   CodTrabajo = 12,
+                   CodTrabajo = 2,
                    Fecha = new DateTime(2023, 7, 11),
-                   Cod_proyecto = 12,
-                   Cod_servicio = 11,
+                   Cod_proyecto = 2,
+                   Cod_servicio = 1,
                    CantHoras = 50,
                    ValorHora = 150000,
                    Costo = 7500000
                },
                 new Trabajo
                 {
-                    CodTrabajo = 13,
+                    CodTrabajo = 3,
                     Fecha = new DateTime(2023, 7, 18),
-                    Cod_proyecto = 12,
-                    Cod_servicio = 12,
+                    Cod_proyecto = 2,
+                    Cod_servicio = 2,
                     CantHoras = 20,
                     ValorHora = 75000,
                     Costo = 1500000

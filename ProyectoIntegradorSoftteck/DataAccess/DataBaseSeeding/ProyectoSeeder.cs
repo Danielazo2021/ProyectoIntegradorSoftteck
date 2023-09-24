@@ -18,21 +18,21 @@ namespace ProyectoIntegradorSoftteck.DataAccess.DataBaseSeeding
             modelBuilder.Entity<Proyecto>().HasData(
              new Proyecto
              {
-                 CodProyecto = 11,
+                 CodProyecto = 1,
                  Nombre = "Optimización de Procesos de Refinamiento de Petróleo CrudoManolita y Cia",
                  Direccion = "Libertad 180 Carloz Paz",
                  Estado = Estado.Terminado.ToString()
              },
              new Proyecto
              {
-                 CodProyecto = 12,
+                 CodProyecto = 2,
                  Nombre = "Programa de Mantenimiento y Actualización de Equipos",
                  Direccion = "Av San Martin S/N Rio Cuarto",
                  Estado = Estado.Pendiente.ToString()
              },
              new Proyecto
              {
-                 CodProyecto = 13,
+                 CodProyecto = 3,
                  Nombre = "Modernización de la Refinería para Carmelo SA",
                  Direccion = "Colon 1050 Cordoba Capital",
                  Estado = Estado.Confirmado.ToString()
