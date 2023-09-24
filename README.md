@@ -1,6 +1,7 @@
 # ProyectoIntegradorSoftteck
 
 Sistema de control de horas de servicio
+
 📌 Premisa
 Nuestro equipo funcional ha recibido un requerimiento por parte de la
 empresa TechOil, líder en el sector Oil & Gas en latinoamerica.
@@ -11,6 +12,7 @@ proceso laborioso, complejo y propenso a errores que consume tiempo y
 limita la capacidad operativa de su equipo de logística. En este sentido,
 TechOil busca mejorar sus procesos operativos digitalizando sus
 operaciones.
+
 Nuestro objetivo en este contexto, es proporcionarles una solución moderna
 y efectiva para digitalizar y automatizar su proceso de control de horas de
 servicio. La propuesta del equipo funcional será desarrollar una aplicación
@@ -25,19 +27,23 @@ servicio. En la segunda fase, será responsable del diseño frontend,
 asegurando una interfaz amigable e intuitiva que permita a los usuarios
 gestionar eficientemente la información y obtener una visión clara del
 tiempo dedicado a cada proyecto.
+
 📝 Requerimientos generales
 Con base en lo anterior, el desarrollador dispondrá de la siguiente
 información: (todos los campos son mandatorios)
+
 ● SERVICIOS: aquí guardan la información de los servicios ofrecidos
 por la empresa. Cada uno de ellos cuenta con los siguientes datos:
 ○ codServicio: valor numérico que identifica al servicio
 ○ descr: es un texto con la descripción del servicio
+
 2
 ○ estado: es un indicador binario que indica si el servicio se
 encuentra activo o no (en caso de no estar activo, la empresa
 no ofrece ese servicio)
 ○ valorHora: valor decimal que indica el costo por hora de ese
 servicio
+
 ● PROYECTOS: aquí guardan la información de los proyectos que la
 empresa tiene en cartera. Cada uno de ellos cuenta con los
 siguientes datos:
@@ -48,6 +54,7 @@ el proyecto
 ○ estado: es un valor numérico que indica el estado del proyecto
 (pueden ser diferentes: 1 – Pendiente, 2 – Confirmado, 3 –
 Terminado)
+
 ● TRABAJOS: aquí guardan la información sobre los diferentes
 servicios ofrecidos a cada proyecto. Cada uno de ellos cuenta con los
 siguientes datos:
@@ -62,6 +69,8 @@ horas solicitadas de un servicio (siempre es por hora entera)
 servicio al momento de contratarlo
 ○ costo: valor decimal calculado en base a la cantidad de horas
 x el valorHora
+
+
 ● USUARIO: Aquí se guardará la información de los usuarios que
 tendrán acceso a la aplicación. De los mismos se conocerá lo
 siguiente:
@@ -86,33 +95,42 @@ con lo esperado. No obstante será muy valorado cualquier propuesta
 adicional para mejorar la calidad del producto final.
 Esta primera sección deberá completarse, al menos con un MVP funcional,
 antes de poder dar comienzo al diseño del frontend.
+
+
 🧱Acciones:
 La aplicación deberá permitir las siguientes operaciones:
 1. Definir un nombre para la aplicación
 2. Realizar un ABM (alta, baja, modificación) de cada una de las
 entidades (servicios, proyectos, trabajos, usuarios).
+
 ○ 📍Condición: Esta opción solo podrán realizarla los usuarios
 administradores.
-3. Realizar un listado (GET ALL) de cada una de las entidades
+
+4. Realizar un listado (GET ALL) de cada una de las entidades
 (servicios, proyectos, trabajos, usuarios).
+
 ○ 📍Condición: Esta opción puede realizarla cualquier tipo de
 usuario (Administrador o Consultor)
-4. Obtener el detalle (GET BY ID) de algún registro particular de cada
+6. Obtener el detalle (GET BY ID) de algún registro particular de cada
 una de las entidades (servicios, proyectos, trabajos, usuarios).
+
 ○ 📍Condición: Esta opción puede realizarla cualquier tipo de
 usuario (Administrador o Consultor)
 4
-5. Emitir un listado de los servicios en estado activo que tiene la
+7. Emitir un listado de los servicios en estado activo que tiene la
 empresa.
+
 ○ 📍Condición: Esta opción puede realizarla cualquier tipo de
 usuario (Administrador o Consultor)
-6. Emitir un listado los proyectos que tiene la empresa, permitiendo
+8. Emitir un listado los proyectos que tiene la empresa, permitiendo
 filtrar por estado. Por ejemplo, emitir listado de todos los proyectos
 que se encuentren en estado “Terminado”.
+
 ○ 📍Condición: Esta opción puede realizarla cualquier tipo de
 usuario (Administrador o Consultor)
-7. Login de usuario (mediante su código de usuario y contraseña).
+9. Login de usuario (mediante su código de usuario y contraseña).
 ⚙Requerimientos técnicos
+
 ✓ Crear una aplicación de tipo Asp Net Core Web API, utilizando Net
 Core 6.
 ✓ Utilizar entity framework core con enfoque model first para crear la
@@ -128,11 +146,14 @@ pero podría incluir las siguientes:
 ✓ Utilizar seguridad basada en roles, aplicando Json Web Tokens
 (JWT).
 ✓ La contraseña del usuario debe guardarse encriptada.
+
+
 🎁Bonus
 Si bien no es obligatorio, será un plus investigar y poder aplicar un
 paginado a los endpoints que devuelvan un listado (GET ALL).
 Normalmente se suele utilizar un tamaño de página de 10 registros,
 pudiendo ser configurable en la petición
+
 5
 ⚠Aclaraciones
 Seguir las buenas prácticas de desarrollo mencionadas en cada uno
