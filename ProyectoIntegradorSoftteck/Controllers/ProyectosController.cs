@@ -70,7 +70,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
         /// Una respuesta que contiene la lista de proyectos que coinciden con el estado especificado o un mensaje de error en caso de fallo.
         /// </returns>
         /// <response code="200">Se devuelve cuando la solicitud se procesa correctamente. Incluye la lista de proyectos por estado.</response>
-        /// <response code="400">Se devuelve cuando se produce un error durante la solicitud o no se encuentran proyectos con el estado especificado.</response>
+        /// <response code="404">Se devuelve cuando se produce un error durante la solicitud o no se encuentran proyectos con el estado especificado.</response>
          [HttpGet("por_estado")]
         [Authorize(Policy = "ConsultorOAdministrador")]
         public async Task<IActionResult> ObtenerProyectosPorEstado(Estado estado)
@@ -82,7 +82,7 @@ namespace ProyectoIntegradorSoftteck.Controllers
                 return ResponseFactory.CreateSuccessResponse(200, respuesta);
 
             }
-            return ResponseFactory.CreateErrorResponse(400, "Error al consultar lista de proyectos");
+            return ResponseFactory.CreateErrorResponse(404, "Error al consultar lista de proyectos");
 
         }
 
